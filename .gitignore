@@ -16,3 +16,4 @@ obj
 bin
 .idea
 Marketplace.sln.DotSettings.user
+app.db-?*
