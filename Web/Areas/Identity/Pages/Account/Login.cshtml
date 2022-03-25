@@ -1,0 +1,28 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Войти";
+}
+
+<section class="container w-50">
+    <form id="account" method="post">
+        <h2 class="text-center">Войти</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">+7</span>
+            <div class="form-floating form-floating-group-prepend flex-grow-1">
+                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="tel-national" aria-required="true" placeholder="Email"/>
+                <label asp-for="Input.PhoneNumber" class="form-label">Номер телефона</label>
+            </div>
+        </div>
+        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+        <div class="mb-3">
+            <button id="login-submit" type="submit" class="w-100 btn btn-primary">Войти</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

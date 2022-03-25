@@ -18,9 +18,11 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+        <PackageReference Include="Twilio" Version="5.72.1" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 

@@ -15,3 +15,5 @@
 obj
 bin
 .idea
+Web/app.db?*
+Marketplace.sln.DotSettings.user

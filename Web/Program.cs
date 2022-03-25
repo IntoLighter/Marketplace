@@ -1,7 +1,10 @@
+using System.Configuration;
+using Domain;
+using Infrastructure.Authentication;
+using Infrastructure.Identity;
 using Infrastructure.Persistence;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Web.Data;
+using Twilio;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +13,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddRazorPages();
+
+builder.Services.Configure<TwilioVerificationCredentials>(options =>
+{
+    options.VerificationSId = builder.Configuration["TwilioVerificationSID"];
+});
+
+TwilioClient.Init(
+    builder.Configuration["TwilioAccountSID"],
+    builder.Configuration["TwilioAuthToken"]);
 
 var app = builder.Build();
 

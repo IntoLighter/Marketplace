@@ -1,0 +1,26 @@
+@page
+@model VerifyCodeModel
+
+@{
+    ViewData["Title"] = "Войти";
+}
+
+<section class="container w-50">
+    <form id="account" method="post">
+        <h2 class="text-center">Войти</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Code" class="form-control" autocomplete="tel-national" aria-required="true" placeholder="Email"/>
+            <label asp-for="Input.Code" class="form-label">Код подтверждения</label>
+        </div>
+        <span asp-validation-for="Input.Code" class="text-danger"></span>
+        <a asp-area="Identity" asp-page="VerifyCode" asp-route-phoneNumber="@Model.PhoneNumber" asp-route-returnUrl="@Model.ReturnUrl">Отправить код повторно</a>
+        <div class="mb-3">
+            <button id="login-submit" type="submit" class="w-100 btn btn-primary">Войти</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
