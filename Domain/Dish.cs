@@ -6,4 +6,5 @@ public class Dish : IItem
     public string Name { get; set; }
     public ushort Sale { get; set; }
     public string Description { get; set; }
+    public List<Product> Products { get; set; }
 }
