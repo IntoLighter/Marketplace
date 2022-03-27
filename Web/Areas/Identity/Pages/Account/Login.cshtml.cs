@@ -25,16 +25,17 @@ namespace Web.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public LoginModel(SignInManager<AppUser> signInManager)
+        public LoginModel(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
-        [BindProperty] public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; } = null!;
 
         [BindProperty] public string? ReturnUrl { get; set; }
-
 
         public class InputModel
         {
@@ -42,10 +43,10 @@ namespace Web.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Номер телефона необходим")]
             [Phone(ErrorMessage = "Некорректный номер телефона")]
             [StringLength(10, MinimumLength = 10, ErrorMessage = "Должен иметь 10 цифр")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; } = string.Empty;
         }
 
-        public async Task OnGetAsync(string? returnUrl)
+        public void OnGetAsync(string? returnUrl)
         {
             ReturnUrl = returnUrl;
         }
@@ -54,10 +55,12 @@ namespace Web.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                AppUser? user = await _userManager.FindByNameAsync(Input.PhoneNumber);
                 return RedirectToPage("VerifyCode", new
                 {
                     phoneNumber = Input.PhoneNumber,
                     returnUrl = ReturnUrl,
+                    appUser = user,
                     callbackType = SuccessCallbackType.SignInCallback
                 });
             }

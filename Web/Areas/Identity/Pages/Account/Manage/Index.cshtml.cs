@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Web.Areas.Identity.Pages.Account.Exceptions;
 using Web.Areas.Identity.Pages.Account.Logic.VerifyCode;
 
 namespace Web.Areas.Identity.Pages.Account.Manage
@@ -23,16 +22,16 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        [TempData] public string StatusMessage { get; set; }
+        [TempData] public string? StatusMessage { get; set; }
 
-        [BindProperty] public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; } = null!;
 
         public class InputModel
         {
             [Phone(ErrorMessage = "Некорректный номер телефона")]
             [Display(Name = "Номер телефона")]
             [Required(ErrorMessage = "Номер телефона необходим")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; } = string.Empty;
         }
 
         private async Task LoadAsync(AppUser user)
@@ -65,20 +64,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             if (Input.PhoneNumber != phoneNumber)
             {
-                try
+                return RedirectToPage("../VerifyCode", new
                 {
-                    user.PhoneNumber = Input.PhoneNumber;
-                    return RedirectToPage("../VerifyCode", new
-                    {
-                        phoneNumber = Input.PhoneNumber,
-                        returnUrl = Request.GetEncodedUrl(),
-                        callbackType = SuccessCallbackType.SaveAccountChangesCallback
-                    });
-                }
-                catch (UnsuccessfulVerification)
-                {
-                    user.PhoneNumber = phoneNumber;
-                }
+                    phoneNumber = Input.PhoneNumber,
+                    returnUrl = Request.GetEncodedUrl(),
+                    callbackType = SuccessCallbackType.SaveAccountChangesCallback
+                });
             }
 
             return Page();

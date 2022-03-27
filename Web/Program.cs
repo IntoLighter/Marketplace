@@ -6,7 +6,6 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Twilio;
 using Microsoft.AspNetCore.Identity;
-using Web.Areas.Identity.Pages.Account.Logic.VerifyCode.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +26,6 @@ builder.Services.Configure<TwilioVerificationCredentials>(options =>
 TwilioClient.Init(
     builder.Configuration["TwilioAccountSID"],
     builder.Configuration["TwilioAuthToken"]);
-
-builder.Services
-    .AddScoped<ISuccessCallbackContext, SuccessCallbackContext>();
 
 var app = builder.Build();
 
