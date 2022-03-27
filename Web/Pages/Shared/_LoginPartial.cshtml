@@ -3,17 +3,12 @@
 @using Microsoft.AspNetCore.Http.Extensions
 @inject SignInManager<AppUser> _signInManager
 
-<ul class="navbar-nav">
-    @if (!_signInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">Войти</a>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">Выйти</a>
-        </li>
-    }
-</ul>
+@if (!_signInManager.IsSignedIn(User))
+{
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">Войти</a>
+}
+else
+{
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Аккаунт</a>
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">Выйти</a>
+}

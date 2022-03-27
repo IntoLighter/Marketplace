@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Аккаунт";
+}
+
+<h3 class="text-center mb-5">Управление аккаунтом</h3>
+<form method="post">
+    <div class="row justify-content-evenly">
+        <partial name="_StatusMessage" for="StatusMessage"/>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="col">
+        </div>
+        <div class="col">
+            <div class="input-group mb-3">
+                <span class="input-group-text">+7</span>
+                <div class="form-floating form-floating-group-prepend flex-grow-1">
+                    <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="tel-national" placeholder="PhoneNumber"/>
+                    <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                </div>
+            </div>
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <button type="submit" class="mb-3 w-100 btn btn-lg btn-primary">Сохранить</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
