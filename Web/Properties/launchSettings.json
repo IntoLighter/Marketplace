@@ -27,7 +27,8 @@
       "commandName": "Executable",
       "executablePath": "dotnet",
       "workingDirectory": "$(ProjectDir)",
-      "commandLineArgs": "watch run"
+      "commandLineArgs": "watch run",
+      "hotReloadProfile": "aspnetcore"
     }
   }
 }
