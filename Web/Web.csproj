@@ -22,10 +22,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
-    <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+    <ItemGroup>
+      <Folder Include="Areas\Cart\Pages" />
+      <Folder Include="Areas\Shop" />
+      <Folder Include="wwwroot\img\shops" />
+      <Folder Include="wwwroot\js" />
+    </ItemGroup>
 
 </Project>
