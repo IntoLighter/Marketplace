@@ -1,4 +1,5 @@
-﻿using Infrastructure.Identity;
+﻿using Domain.Marketplace;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,5 +12,7 @@ public class AppDbContext : IdentityDbContext<AppUser>, IDbContext
     {
     }
 
-    public DbSet<AppUser> AppUsers { get; init; }
+    public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<Dish> Dishes { get; set; }
+    public DbSet<Product> Products { get; set; }
 }
