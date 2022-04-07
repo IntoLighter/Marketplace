@@ -10,4 +10,11 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="DishCategory.cs" />
+      <Compile Remove="IMarketplaceItem.cs" />
+      <Compile Remove="MarketplaceDish.cs" />
+      <Compile Remove="MarketplaceProduct.cs" />
+    </ItemGroup>
+
 </Project>

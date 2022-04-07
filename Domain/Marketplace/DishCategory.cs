@@ -1,4 +1,4 @@
-namespace Domain;
+namespace Domain.Marketplace;
 
 public enum DishCategory
 {
