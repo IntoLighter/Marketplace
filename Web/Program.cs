@@ -1,5 +1,7 @@
 using System.Configuration;
+using Application;
 using Domain;
+using Infrastructure;
 using Infrastructure.Authentication;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
@@ -9,14 +11,11 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<IDbContext, AppDbContext>(options =>
-    options.UseSqlite(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.Configure<TwilioVerificationCredentials>(options =>
 {
