@@ -3,22 +3,26 @@
 @using Microsoft.AspNetCore.Http.Extensions
 @inject SignInManager<AppUser> _signInManager
 
-@if (!_signInManager.IsSignedIn(User))
-{
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
-        <img src="~/img/icons/login.png" alt="login">
-        <div>Войти</div>
-    </a>
-}
-else
-{
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Аккаунт</a>
-    <a class="nav-link" asp-area="Cart" asp-page="/Cart">
-        <img src="~/img/icons/cart.svg" alt="">
-        <div>Корзина</div>
-    </a>
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
-        <img src="~/img/icons/logout.png" alt="">
-        <div>Выйти</div>
-    </a>
-}
+<div class="nav">
+    @if (!_signInManager.IsSignedIn(User))
+    {
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+            <img src="~/img/icons/login.png" alt="">
+            <div>Войти</div>
+        </a>
+    }
+    else
+    {
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">
+            <div >Аккаунт</div>
+        </a>
+        <a class="nav-link" asp-area="Cart" asp-page="/Cart">
+            <img src="~/img/icons/cart.svg" alt="">
+            <div>Корзина</div>
+        </a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+            <img src="~/img/icons/logout.png" alt="">
+            <div>Выйти</div>
+        </a>
+    }
+</div>
