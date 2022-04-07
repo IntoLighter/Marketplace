@@ -12,7 +12,7 @@ public class AppDbContext : IdentityDbContext<AppUser>, IDbContext
     {
     }
 
-    public DbSet<AppUser> AppUsers { get; set; }
-    public DbSet<Dish> Dishes { get; set; }
-    public DbSet<Product> Products { get; set; }
+    public DbSet<AppUser> AppUsers { get; set; } = null!;
+    public DbSet<Dish> Dishes { get; set; } = null!;
+    public DbSet<Product> Products { get; set; } = null!;
 }
