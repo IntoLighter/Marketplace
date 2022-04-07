@@ -17,3 +17,4 @@ bin
 .idea
 Marketplace.sln.DotSettings.user
 app.db*
+.DS_Store
