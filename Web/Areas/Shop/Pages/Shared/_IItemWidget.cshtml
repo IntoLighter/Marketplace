@@ -2,16 +2,17 @@
 @model Domain.Marketplace.IItem
 @inject IGetIItemInformation _injector
 
-<div prices="@_injector.GetPriceForShop(Model)">
-    <img src="@Model.ImageUri" alt="@Model.Name" id="Image">
-    <div id="Name">@Model.Name</div>
-    <h5 id="Weight" class="text-black-50">@Model.Weight</h5>
+<div>
+    <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
+    <div class="Name">@Model.Name</div>
+    <h5 class="Weight text-black-50">@Model.Weight</h5>
     <div class="row justify-content-between">
-        <span id="Price" class="col"></span>
-        <select id="Shop" class="form-select"></select>
+        <span class="Price col"></span>
+        <select class="Shop form-select" data-prices="@_injector.GetPriceForShop(Model)"></select>
     </div>
-    <div class="row justify-content-between">
-        <span id="Count" type="number" class="col me-5"></span>
+    <div class="row justify-content-evenly">
+        <button class="btn btn-primary delete-from-cart col" type="button">-</button>
+        <input type="number" class="Count form-control col">
         <button class="btn btn-primary add-to-cart col" type="button">+</button>
     </div>
 </div>
