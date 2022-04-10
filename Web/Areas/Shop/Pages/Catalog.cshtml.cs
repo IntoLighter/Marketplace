@@ -5,7 +5,7 @@ using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Web.Areas.Search.Pages
+namespace Web.Areas.Shop.Pages
 {
     public class CatalogModel : PageModel
     {

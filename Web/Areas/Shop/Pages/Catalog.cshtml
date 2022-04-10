@@ -1,5 +1,5 @@
 ﻿@page
-@model Web.Areas.Search.Pages.CatalogModel
+@model Web.Areas.Shop.Pages.CatalogModel
 @{
     ViewData["Title"] = "Список блюд";
 }
@@ -17,7 +17,10 @@
             </div>
         </div>
         <div class="col-md-10">
-            <partial name="_ItemWidget" />
+            @foreach (var product in Model.Products)
+            {
+                <partial name="_IItemWidget" model="product" />
+            }
         </div>
     </div>
 </div>

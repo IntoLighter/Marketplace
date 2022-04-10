@@ -29,7 +29,6 @@
 
     <ItemGroup>
       <Folder Include="Areas\Cart\Pages" />
-      <Folder Include="Areas\Shop" />
       <Folder Include="wwwroot\img\shops" />
       <Folder Include="wwwroot\js" />
     </ItemGroup>
