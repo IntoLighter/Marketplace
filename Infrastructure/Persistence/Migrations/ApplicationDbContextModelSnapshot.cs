@@ -23,6 +23,9 @@ namespace Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ImageUri")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -45,12 +48,6 @@ namespace Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DishId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("ImageUri")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -64,9 +61,28 @@ namespace Web.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Domain.Marketplace.ProductInDish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DishId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("DishId");
 
-                    b.ToTable("Products");
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInDish");
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.AppUser", b =>
@@ -265,11 +281,23 @@ namespace Web.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Marketplace.Product", b =>
+            modelBuilder.Entity("Domain.Marketplace.ProductInDish", b =>
                 {
-                    b.HasOne("Domain.Marketplace.Dish", null)
+                    b.HasOne("Domain.Marketplace.Dish", "Dish")
                         .WithMany("Products")
-                        .HasForeignKey("DishId");
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Marketplace.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dish");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
