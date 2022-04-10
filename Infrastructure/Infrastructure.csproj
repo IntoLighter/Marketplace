@@ -17,4 +17,9 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Persistence\Migrations\20220408060406_AddCartProduct.Designer.cs" />
+      <Compile Remove="Persistence\Migrations\20220408060406_AddCartProduct.cs" />
+    </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@
 
 namespace Web.Data.Migrations
 {
-    public partial class AddMarketplaceDomains : Migration
+    public partial class AddShopDomains : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace Web.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     ImageUri = table.Column<string>(type: "TEXT", nullable: false),
-                    Weight = table.Column<int>(type: "INTEGER", nullable: false)
+                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
+                    Category = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,33 +32,60 @@ namespace Web.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     ImageUri = table.Column<string>(type: "TEXT", nullable: false),
-                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
-                    Category = table.Column<int>(type: "INTEGER", nullable: false),
-                    DishId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Weight = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductInDish",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DishId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductInDish", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Dishes_DishId",
+                        name: "FK_ProductInDish_Dishes_DishId",
                         column: x => x.DishId,
                         principalTable: "Dishes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductInDish_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_DishId",
-                table: "Products",
+                name: "IX_ProductInDish_DishId",
+                table: "ProductInDish",
                 column: "DishId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductInDish_ProductId",
+                table: "ProductInDish",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "ProductInDish");
 
             migrationBuilder.DropTable(
                 name: "Dishes");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }
