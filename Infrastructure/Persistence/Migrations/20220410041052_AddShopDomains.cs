@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Domain.Marketplace;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -115,10 +116,10 @@ namespace Web.Data.Migrations
             
             migrationBuilder.InsertData(
                 table: "Dishes",
-                columns: new string[] { "Name", "ImageUri", "Weight" },
-                values: new object[,] { {"Запеканка из творогов и бананов", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/763/673/110/121/77/100029362732b0.jpg", 200},
-                                        {"Клубничное мороженое", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/-15/631/216/225/175/6/100024893640b1.jpg", 70},
-                                        {"Салат из кальмаров и крабовых палочек", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/939/728/393/015/12/100029362905b0.jpg", 170}}
+                columns: new string[] { "Name", "ImageUri", "Weight", "Category" },
+                values: new object[,] { {"Запеканка из творогов и бананов", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/763/673/110/121/77/100029362732b0.jpg", 200, Convert.ToInt32(DishCategory.Dessert)},
+                                        {"Клубничное мороженое", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/-15/631/216/225/175/6/100024893640b1.jpg", 70, Convert.ToInt32(DishCategory.Dessert)},
+                                        {"Салат из кальмаров и крабовых палочек", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/939/728/393/015/12/100029362905b0.jpg", 170, Convert.ToInt32(DishCategory.Dessert)}}
             );
         }
 
