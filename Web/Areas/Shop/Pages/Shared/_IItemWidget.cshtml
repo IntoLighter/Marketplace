@@ -1,18 +1,48 @@
+@using System.Security.Cryptography
 @using Application
+@using Domain.Marketplace
+@using Newtonsoft.Json
 @model Domain.Marketplace.IItem
 @inject IGetIItemInformation _injector
 
-<div>
+<div class="Item" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
     <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
     <div class="Name">@Model.Name</div>
     <h5 class="Weight text-black-50">@Model.Weight</h5>
     <div class="row justify-content-between">
         <span class="Price col"></span>
-        <select class="Shop form-select" data-prices="@_injector.GetPriceForShop(Model)"></select>
+        <select class="Shop form-select" data-prices="@JsonConvert.SerializeObject(_injector.GetPriceForShop(Model))"></select>
     </div>
     <div class="row justify-content-evenly">
         <button class="btn btn-primary delete-from-cart col" type="button">-</button>
-        <input type="number" class="Count form-control col">
+        <input type="number" class="Count form-control col" value="0">
         <button class="btn btn-primary add-to-cart col" type="button">+</button>
+    </div>
+    <div class="dish">
+        @if (Model is Dish dish)
+        {
+            <h4>Состоит из:</h4>
+
+            var productsLength = dish.Products.Count;
+            if (dish.Products.Count % 2 == 1)
+            {
+                productsLength--;
+            }
+            for (var i = 0; i < productsLength; i += 2)
+            {
+                <div class="row mb-2 row-cols-2">
+                    <div class="col" data-info="@JsonConvert.SerializeObject(Model)">
+                        @{ var product1 = dish.Products[i].Product; }
+                        <img src="@product1.ImageUri" alt="@product1.Name">
+                        <h5>@product1.Name</h5>
+                    </div>
+                    <div class="col" data-info="@JsonConvert.SerializeObject(Model)">
+                        @{ var product2 = dish.Products[i + 1].Product; }
+                        <img src="@product2.ImageUri" alt="@product2.Name">
+                        <h5>@product2.Name</h5>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
