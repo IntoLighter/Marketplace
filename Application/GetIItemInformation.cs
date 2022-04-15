@@ -15,6 +15,6 @@ public class GetIItemInformation : IGetIItemInformation
     public Dictionary<string, decimal> GetPricesForShop(IItem item)
     {
         return Enum.GetValues(typeof(Shop)).Cast<Shop>()
-            .ToDictionary(shop => shop.ToString(), _ => _context.Prices.Find(item.Id)!.Price);
+            .ToDictionary(shop => shop.ToString(), shop => _context.Prices.Find(item.Id, shop)!.Price);
     }
 }
