@@ -218,20 +218,13 @@ $('.Shop').children('span').ddslick({
     data: ddData,
     imagePosition: 'left',
     onSelected: (selected: object) => {
-        // @ts-ignore
+        //@ts-ignore
         const select = $(selected.selectedItem).parents('.Item')
         const prices = select.data('prices')
         if (!prices) return
 
-        const priceField = select.find('.Price');
-        const text = priceField.text()
         // @ts-ignore
-        const needingPrice = prices[selected.selectedData.value];
-        if (text.match(/\d+/) === null) {
-            priceField.text(`${needingPrice} ${text}`)
-        } else {
-            priceField.text(text.replace(/\d+/, needingPrice))
-        }
+        select.find('.Price').text(prices[selected.selectedData.value])
     }
 })
 
