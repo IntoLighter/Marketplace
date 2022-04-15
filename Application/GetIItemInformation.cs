@@ -10,6 +10,6 @@ public class GetIItemInformation : IGetIItemInformation
         {
         }
 
-        throw new NotImplementedException();
+        return null;
     }
 }

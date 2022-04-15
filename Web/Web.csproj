@@ -28,13 +28,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Shop" />
       <TypeScriptCompile Include="wwwroot\js\cart.ts" />
       <TypeScriptCompile Include="wwwroot\js\site.ts" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="wwwroot\img\shops" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Shop\Pages\Shared\_IItemWidget.cshtml" />
     </ItemGroup>
 
 </Project>
