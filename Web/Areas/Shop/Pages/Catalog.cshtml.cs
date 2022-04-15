@@ -12,7 +12,7 @@ namespace Web.Areas.Shop.Pages
         private readonly IDbContext _context;
         public List<Dish> Dishes { get; set; }
         public List<Product> Products { get; set; }
-        public CatalogModel(AppDbContext db)
+        public CatalogModel(IDbContext db)
         {
             _context = db;
             Products = _context.Products.ToList();
