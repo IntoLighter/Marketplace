@@ -1,3 +1,11 @@
+.dd-container {
+  margin-right: 0;
+}
+.dd-container .dd-selected-image {
+  max-width: none;
+  width: 160px;
+  height: 45px;
+}
 .form-floating-group-prepend input {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;

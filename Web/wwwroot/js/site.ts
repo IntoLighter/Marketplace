@@ -195,34 +195,43 @@ $('.Count').on('input', function () {
 const ddData = [
     {
         text: 'Аллея',
-        value: 'alleya',
+        value: 'Alley',
         selected: false,
-        imageSrc: 'img/shops/alley.png'
+        imageSrc: '../img/shops/alley.png'
     },
     {
-        text: 'Fix price',
-        value: 'fixpricefd',
+        text: 'Fixprice',
+        value: 'FixPrice',
         selected: false,
-        imageSrc: 'img/shops/fixprice.png'
+        imageSrc: '../img/shops/fixprice.png'
     },
     {
         text: 'Лента',
-        value: 'lenta',
+        value: 'Lenta',
         selected: true,
-        imageSrc: 'img/shops/lenta.png'
+        imageSrc: '../img/shops/lenta.png'
     }
 ]
 
 // @ts-ignore
-$('.Shop').ddslick({
+$('.Shop').children('span').ddslick({
     data: ddData,
-    width: 100,
     imagePosition: 'left',
-    onSelected: function (selected: any) {
-        console.log(selected)
-        const select = $(this).parent();
-        const counts = select.data('prices')
-        select.parent().parent().find('.Price').text(counts[selected.val()])
+    onSelected: (selected: object) => {
+        // @ts-ignore
+        const select = $(selected.selectedItem).parents('.Item')
+        const prices = select.data('prices')
+        if (!prices) return
+
+        const priceField = select.find('.Price');
+        const text = priceField.text()
+        // @ts-ignore
+        const needingPrice = prices[selected.selectedData.value];
+        if (text.match(/\d+/) === null) {
+            priceField.text(`${needingPrice} ${text}`)
+        } else {
+            priceField.text(text.replace(/\d+/, needingPrice))
+        }
     }
 })
 

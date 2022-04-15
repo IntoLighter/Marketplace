@@ -5,7 +5,7 @@
 
 @{
     ViewData["Title"] = "Войти";
-    var resendLinkParams = new Dictionary<string, string>()
+    var resendLinkParams = new Dictionary<string, string?>
     {
         { "phoneNumber", Model.PhoneNumber },
         { "returnUrl", Model.ReturnUrl },

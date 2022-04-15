@@ -5,13 +5,15 @@
 @model Domain.Marketplace.IItem
 @inject IGetIItemInformation _injector
 
-<div class="Item" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
+<div class="Item" data-prices="@JsonConvert.SerializeObject(_injector.GetPricesForShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
     <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
     <div class="Name">@Model.Name</div>
-    <h5 class="Weight text-black-50">@Model.Weight</h5>
-    <div class="row justify-content-between">
-        <span class="Price col"></span>
-        <select class="Shop form-select" data-prices="@JsonConvert.SerializeObject(_injector.GetPriceForShop(Model))"></select>
+    <h6 class="Weight text-black-50">@Model.Weight г.</h6>
+    <div class="row justify-content-evenly">
+        <h4 class="Price col"> руб.</h4>
+        <span class="Shop col">
+            <span></span>
+        </span>
     </div>
     <div class="row justify-content-evenly">
         <button class="btn btn-primary delete-from-cart col" type="button">-</button>
