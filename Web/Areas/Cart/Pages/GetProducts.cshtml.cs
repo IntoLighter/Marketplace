@@ -1,6 +1,7 @@
 using Domain.Cart;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Areas.Cart.Pages;
@@ -14,8 +15,8 @@ public class GetProducts : PageModel
         _userManager = userManager;
     }
 
-    public async Task<List<CartProduct>?> OnGet()
+    public async Task<IActionResult> OnGet()
     {
-        return (await _userManager.GetUserAsync(User)).CartProducts;
+        return new JsonResult((await _userManager.GetUserAsync(User)).CartProducts);
     }
 }

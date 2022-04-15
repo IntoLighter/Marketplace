@@ -1,11 +1,14 @@
+using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Net.Http.Headers;
 
 namespace Web.Areas.Identity.Pages.Account;
 
 public class IsAuthenticated : PageModel
 {
-    public bool OnGet()
+    public IActionResult OnGetAsync()
     {
-        return User.Identity?.IsAuthenticated ?? false;
+        return new JsonResult(User.Identity?.IsAuthenticated ?? false);
     }
 }
