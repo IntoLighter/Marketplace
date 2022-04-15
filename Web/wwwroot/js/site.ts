@@ -214,7 +214,7 @@ const ddData = [
 ]
 
 // @ts-ignore
-$('.Shop').children('span').ddslick({
+$('.Shop').ddslick({
     data: ddData,
     imagePosition: 'left',
     onSelected: (selected: object) => {
