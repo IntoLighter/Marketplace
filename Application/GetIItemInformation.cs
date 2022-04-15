@@ -1,15 +1,20 @@
 using Domain.Marketplace;
+using Infrastructure.Persistence;
 
 namespace Application;
 
 public class GetIItemInformation : IGetIItemInformation
 {
-    public Dictionary<string, int> GetPriceForShop(IItem item)
-    {
-        foreach (var shop in Arrays.Shops)
-        {
-        }
+    private readonly IDbContext _context;
 
-        return null;
+    public GetIItemInformation(IDbContext context)
+    {
+        _context = context;
+    }
+
+    public Dictionary<string, decimal> GetPricesForShop(IItem item)
+    {
+        return Enum.GetValues(typeof(Shop)).Cast<Shop>()
+            .ToDictionary(shop => shop.ToString(), _ => _context.Prices.Find(item.Id)!.Price);
     }
 }

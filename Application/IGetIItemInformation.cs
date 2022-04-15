@@ -4,5 +4,5 @@ namespace Application;
 
 public interface IGetIItemInformation
 {
-    Dictionary<string, int> GetPriceForShop(IItem item);
+    Dictionary<string, decimal> GetPricesForShop(IItem item);
 }

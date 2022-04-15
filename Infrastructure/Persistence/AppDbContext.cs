@@ -16,11 +16,13 @@ public class AppDbContext : IdentityDbContext<AppUser>, IDbContext
     public DbSet<AppUser> AppUsers { get; set; } = null!;
     public DbSet<Dish> Dishes { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<ProductShopPrice> Prices { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.Entity<ProductInDish>().HasKey(e => new { e.ProductId, e.DishId });
         builder.Entity<CartProduct>().HasKey(e => new { e.ProductId, e.ShopName });
+        builder.Entity<ProductShopPrice>().HasKey(e => new { e.ProductId, e.Shop });
     }
 }

@@ -103,6 +103,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductInDish");
                 });
 
+            modelBuilder.Entity("Domain.Marketplace.ProductShopPrice", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Shop")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProductId", "Shop");
+
+                    b.ToTable("Prices");
+                });
+
             modelBuilder.Entity("Infrastructure.Identity.AppUser", b =>
                 {
                     b.Property<string>("Id")

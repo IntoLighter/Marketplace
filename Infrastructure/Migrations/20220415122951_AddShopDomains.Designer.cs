@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220415043102_AddShopDomains")]
+    [Migration("20220415122951_AddShopDomains")]
     partial class AddShopDomains
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,6 +103,22 @@ namespace Infrastructure.Migrations
                     b.HasIndex("DishId");
 
                     b.ToTable("ProductInDish");
+                });
+
+            modelBuilder.Entity("Domain.Marketplace.ProductShopPrice", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Shop")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProductId", "Shop");
+
+                    b.ToTable("Prices");
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.AppUser", b =>
