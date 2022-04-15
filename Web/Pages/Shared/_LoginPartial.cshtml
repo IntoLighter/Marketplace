@@ -4,6 +4,10 @@
 @inject SignInManager<AppUser> _signInManager
 
 <div class="nav">
+    <a class="nav-link" asp-area="Cart" asp-page="/Index">
+        <img src="~/img/icons/cart.svg" alt="">
+        <div>Корзина</div>
+    </a>
     @if (!_signInManager.IsSignedIn(User))
     {
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
@@ -15,10 +19,6 @@
     {
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">
             <div >Аккаунт</div>
-        </a>
-        <a class="nav-link" asp-area="Cart" asp-page="/Cart">
-            <img src="~/img/icons/cart.svg" alt="">
-            <div>Корзина</div>
         </a>
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
             <img src="~/img/icons/logout.png" alt="">

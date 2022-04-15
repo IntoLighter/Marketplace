@@ -51,16 +51,14 @@ namespace Web.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                AppUser? user = await _userManager.FindByNameAsync(Input.PhoneNumber);
                 return RedirectToPage("VerifyCode", new
                 {
                     phoneNumber = Input.PhoneNumber,
                     returnUrl = ReturnUrl,
-                    appUser = user,
                     callbackType = SuccessCallbackType.SignInCallback
                 });
             }

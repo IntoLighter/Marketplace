@@ -7,15 +7,39 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Web.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
+
+            modelBuilder.Entity("Domain.Cart.CartProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ShopName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("Count")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProductId", "ShopName");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("CartProduct");
+                });
 
             modelBuilder.Entity("Domain.Marketplace.Dish", b =>
                 {
@@ -66,21 +90,15 @@ namespace Web.Data.Migrations
 
             modelBuilder.Entity("Domain.Marketplace.ProductInDish", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("DishId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "DishId");
 
                     b.HasIndex("DishId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductInDish");
                 });
@@ -281,6 +299,21 @@ namespace Web.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Cart.CartProduct", b =>
+                {
+                    b.HasOne("Infrastructure.Identity.AppUser", null)
+                        .WithMany("CartProducts")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Domain.Marketplace.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Marketplace.ProductInDish", b =>
                 {
                     b.HasOne("Domain.Marketplace.Dish", "Dish")
@@ -354,6 +387,11 @@ namespace Web.Data.Migrations
             modelBuilder.Entity("Domain.Marketplace.Dish", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Infrastructure.Identity.AppUser", b =>
+                {
+                    b.Navigation("CartProducts");
                 });
 #pragma warning restore 612, 618
         }
