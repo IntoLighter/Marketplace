@@ -28,9 +28,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Cart\Pages" />
+      <Folder Include="Areas\Shop" />
+      <TypeScriptCompile Include="wwwroot\js\cart.ts" />
+      <TypeScriptCompile Include="wwwroot\js\site.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="wwwroot\img\shops" />
-      <Folder Include="wwwroot\js" />
     </ItemGroup>
 
 </Project>
