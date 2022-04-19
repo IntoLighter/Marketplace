@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Domain.Marketplace;
 
 #nullable disable
 
@@ -13,101 +14,101 @@ namespace Infrastructure.Migrations
                 columns: new string[] { "ProductId", "Shop", "Price" },
                 values: new object[,]
                 {
-                    {1, 1, 177},
-                    {1, 2, 173},
-                    {1, 3, 236},
+                    {1, Convert.ToInt32(Shop.Alley), 177},
+                    {1, Convert.ToInt32(Shop.Lenta), 173},
+                    {1, Convert.ToInt32(Shop.FixPrice), 236},
             
-                    {2, 1, 121},
-                    {2, 2, 115},
-                    {2, 3, 171},
+                    {2, Convert.ToInt32(Shop.Alley), 121},
+                    {2, Convert.ToInt32(Shop.Lenta), 115},
+                    {2, Convert.ToInt32(Shop.FixPrice), 171},
             
-                    {3, 1, 197},
-                    {3, 2, 179},
-                    {3, 3, 198},
+                    {3, Convert.ToInt32(Shop.Alley), 197},
+                    {3, Convert.ToInt32(Shop.Lenta), 179},
+                    {3, Convert.ToInt32(Shop.FixPrice), 198},
             
-                    {4, 1, 81},
-                    {4, 2, 80},
-                    {4, 3, 51},
+                    {4, Convert.ToInt32(Shop.Alley), 81},
+                    {4, Convert.ToInt32(Shop.Lenta), 80},
+                    {4, Convert.ToInt32(Shop.FixPrice), 51},
             
-                    {5, 1, 140},
-                    {5, 2, 100},
-                    {5, 3, 76},
+                    {5, Convert.ToInt32(Shop.Alley), 140},
+                    {5, Convert.ToInt32(Shop.Lenta), 100},
+                    {5, Convert.ToInt32(Shop.FixPrice), 76},
             
-                    {6, 1, 852},
-                    {6, 2, 601},
-                    {6, 3, 677},
+                    {6, Convert.ToInt32(Shop.Alley), 852},
+                    {6, Convert.ToInt32(Shop.Lenta), 601},
+                    {6, Convert.ToInt32(Shop.FixPrice), 677},
             
-                    {7, 1, 16},
-                    {7, 2, 26},
-                    {7, 3, 32},
+                    {7, Convert.ToInt32(Shop.Alley), 16},
+                    {7, Convert.ToInt32(Shop.Lenta), 26},
+                    {7, Convert.ToInt32(Shop.FixPrice), 32},
             
-                    {8, 1, 250},
-                    {8, 2, 409},
-                    {8, 3, 483},
+                    {8, Convert.ToInt32(Shop.Alley), 250},
+                    {8, Convert.ToInt32(Shop.Lenta), 409},
+                    {8, Convert.ToInt32(Shop.FixPrice), 483},
             
-                    {9, 1, 61},
-                    {9, 2, 54},
-                    {9, 3, 74},
+                    {9, Convert.ToInt32(Shop.Alley), 61},
+                    {9, Convert.ToInt32(Shop.Lenta), 54},
+                    {9, Convert.ToInt32(Shop.FixPrice), 74},
             
-                    {10, 1, 69},
-                    {10, 2, 90},
-                    {10, 3, 115},
+                    {10, Convert.ToInt32(Shop.Alley), 69},
+                    {10, Convert.ToInt32(Shop.Lenta), 90},
+                    {10, Convert.ToInt32(Shop.FixPrice), 115},
             
-                    {11, 1, 141},
-                    {11, 2, 270},
-                    {11, 3, 350},
+                    {11, Convert.ToInt32(Shop.Alley), 141},
+                    {11, Convert.ToInt32(Shop.Lenta), 270},
+                    {11, Convert.ToInt32(Shop.FixPrice), 350},
             
-                    {12, 1, 1},
-                    {12, 2, 2},
-                    {12, 3, 1},
+                    {12, Convert.ToInt32(Shop.Alley), 1},
+                    {12, Convert.ToInt32(Shop.Lenta), 2},
+                    {12, Convert.ToInt32(Shop.FixPrice), 1},
             
-                    {13, 1, 95},
-                    {13, 2, 98},
-                    {13, 3, 58},
+                    {13, Convert.ToInt32(Shop.Alley), 95},
+                    {13, Convert.ToInt32(Shop.Lenta), 98},
+                    {13, Convert.ToInt32(Shop.FixPrice), 58},
             
-                    {14, 1, 127},
-                    {14, 2, 140},
-                    {14, 3, 76},
+                    {14, Convert.ToInt32(Shop.Alley), 127},
+                    {14, Convert.ToInt32(Shop.Lenta), 140},
+                    {14, Convert.ToInt32(Shop.FixPrice), 76},
             
-                    {15, 1, 699},
-                    {15, 2, 757},
-                    {15, 3, 718},
+                    {15, Convert.ToInt32(Shop.Alley), 699},
+                    {15, Convert.ToInt32(Shop.Lenta), 757},
+                    {15, Convert.ToInt32(Shop.FixPrice), 718},
             
-                    {16, 1, 87},
-                    {16, 2, 150},
-                    {16, 3, 98},
+                    {16, Convert.ToInt32(Shop.Alley), 87},
+                    {16, Convert.ToInt32(Shop.Lenta), 150},
+                    {16, Convert.ToInt32(Shop.FixPrice), 98},
             
-                    {17, 1, 33},
-                    {17, 2, 33},
-                    {17, 3, 49},
+                    {17, Convert.ToInt32(Shop.Alley), 33},
+                    {17, Convert.ToInt32(Shop.Lenta), 33},
+                    {17, Convert.ToInt32(Shop.FixPrice), 49},
             
-                    {18, 1, 73},
-                    {18, 2, 60},
-                    {18, 3, 56},
+                    {18, Convert.ToInt32(Shop.Alley), 73},
+                    {18, Convert.ToInt32(Shop.Lenta), 60},
+                    {18, Convert.ToInt32(Shop.FixPrice), 56},
             
-                    {19, 1, 49},
-                    {19, 2, 39},
-                    {19, 3, 40},
+                    {19, Convert.ToInt32(Shop.Alley), 49},
+                    {19, Convert.ToInt32(Shop.Lenta), 39},
+                    {19, Convert.ToInt32(Shop.FixPrice), 40},
             
-                    {20, 1, 971},
-                    {20, 2, 914},
-                    {20, 3, 594},
+                    {20, Convert.ToInt32(Shop.Alley), 971},
+                    {20, Convert.ToInt32(Shop.Lenta), 914},
+                    {20, Convert.ToInt32(Shop.FixPrice), 594},
             
-                    {21, 1, 81},
-                    {21, 2, 95},
-                    {21, 3, 103},
+                    {21, Convert.ToInt32(Shop.Alley), 81},
+                    {21, Convert.ToInt32(Shop.Lenta), 95},
+                    {21, Convert.ToInt32(Shop.FixPrice), 103},
             
-                    {22, 1, 118},
-                    {22, 2, 200},
-                    {22, 3, 170},
+                    {22, Convert.ToInt32(Shop.Alley), 118},
+                    {22, Convert.ToInt32(Shop.Lenta), 200},
+                    {22, Convert.ToInt32(Shop.FixPrice), 170},
             
-                    {23, 1, 209},
-                    {23, 2, 280},
-                    {23, 3, 170},
+                    {23, Convert.ToInt32(Shop.Alley), 209},
+                    {23, Convert.ToInt32(Shop.Lenta), 280},
+                    {23, Convert.ToInt32(Shop.FixPrice), 170},
             
-                    {24, 1, 79},
-                    {24, 2, 54},
-                    {24, 3, 38}
+                    {24, Convert.ToInt32(Shop.Alley), 79},
+                    {24, Convert.ToInt32(Shop.Lenta), 54},
+                    {24, Convert.ToInt32(Shop.FixPrice), 38}
                 });
         }
 
