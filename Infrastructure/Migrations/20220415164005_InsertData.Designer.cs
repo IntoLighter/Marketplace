@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220415064005_InsertData")]
+    [Migration("20220415164005_InsertData")]
     partial class InsertData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
