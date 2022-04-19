@@ -14,7 +14,6 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Name", "ImageUri", "Weight" },
                 values: new object[,]
                 {
-                    {"НулевойПродукт", "https://google.com/", 1000},
                     {"Творог рассыпчатый Правильный Творог 12%", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/-86/639/649/784/145/5/100029005055b0.jpg", 400},
                     {"Яйцо куриное Лето С1 10 шт", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/116/822/757/732/315/25/100028184399b0.jpg", 600},
                     {"Мед Пчелиная аптека с золотым корнем", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/-17/382/039/452/191/657/100030680429b0.jpg", 250},
@@ -47,7 +46,6 @@ namespace Infrastructure.Migrations
                 columns: new string[] { "Name", "ImageUri", "Weight", "Category" },
                 values: new object[,]
                 { 
-                    {"НулевоеБлюдо", "https://google.com/", 1000, Convert.ToInt32(DishCategory.Soup)},
                     {"Запеканка из творога и бананов", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/763/673/110/121/77/100029362732b0.jpg", 200, Convert.ToInt32(DishCategory.Dessert)},
                     {"Клубничное мороженое", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/185/927/261/671/216/21/100028800481b0.jpg", 500, Convert.ToInt32(DishCategory.Dessert)},
                     {"Салат из кальмаров и крабовых палочек", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/101/939/728/393/015/12/100029362905b0.jpg", 170, Convert.ToInt32(DishCategory.Salad)},
