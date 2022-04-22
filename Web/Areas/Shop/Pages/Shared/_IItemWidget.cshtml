@@ -6,48 +6,57 @@
 @inject IGetIItemInformation _injector
 
 <div class="Item" data-prices="@JsonConvert.SerializeObject(_injector.GetPricesForShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
-    <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
-    <div class="Name">@Model.Name</div>
-    <h6 class="Weight text-black-50">@Model.Weight г.</h6>
-    <div class="row justify-content-evenly">
-        <h4 class="col">
-            <span class="Price"></span>
-            <span> руб.</span>
-        </h4>
-        <span class="col">
-            <span class="Shop"></span>
-        </span>
+    <div class="text-center">
+        <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
     </div>
-    <div class="row justify-content-evenly">
-        <button class="btn btn-primary delete-from-cart col" type="button">-</button>
-        <input type="number" class="Count form-control col" value="0">
-        <button class="btn btn-primary add-to-cart col" type="button">+</button>
+    <div class="row Item-data mb-3">
+        <div class="col">
+            <div class="Name">@Model.Name</div>
+            <h6 class="text-black-50 mb-2">
+                <span class="Weight">@Model.Weight</span>
+                <span> г.</span>
+            </h6>
+            <h4>
+                <span class="Price"></span>
+                <span> руб.</span>
+            </h4>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <div class="Shop"></div>
+        </div>
     </div>
-    <div class="dish">
-        @if (Model is Dish dish)
-        {
-            <h4>Состоит из:</h4>
+    <div class="row row-cols-auto">
+        <button class="btn btn-primary delete-from-cart col-5" type="button" disabled>-</button>
+        <input type="number" class="Count col mx-auto" value="0">
+        <button class="btn btn-primary add-to-cart col-5" type="button">+</button>
+    </div>
+    @if (Model is Dish dish)
+    {
+        <div class="dish">
+            @{
+                <h6>Состоит из:</h6>
 
-            var productsLength = dish.Products.Count;
-            if (dish.Products.Count % 2 == 1)
-            {
-                productsLength--;
-            }
-            for (var i = 0; i < productsLength; i += 2)
-            {
-                <div class="row mb-2 row-cols-2">
-                    <div class="col" data-info="@JsonConvert.SerializeObject(Model)">
-                        @{ var product1 = dish.Products[i].Product; }
-                        <img src="@product1.ImageUri" alt="@product1.Name">
-                        <h5>@product1.Name</h5>
+                var productsLength = dish.Products.Count;
+                if (dish.Products.Count % 2 == 1)
+                {
+                    productsLength--;
+                }
+                for (var i = 0; i < productsLength; i += 2)
+                {
+                    <div class="row mb-2 row-cols-2">
+                        <div class="col" data-info="@JsonConvert.SerializeObject(dish.Products[i])">
+                            @{ var product1 = dish.Products[i].Product; }
+                            <img src="@product1.ImageUri" alt="@product1.Name">
+                            <h5>@product1.Name</h5>
+                        </div>
+                        <div class="col" data-info="@JsonConvert.SerializeObject(dish.Products[i + 1])">
+                            @{ var product2 = dish.Products[i + 1].Product; }
+                            <img src="@product2.ImageUri" alt="@product2.Name">
+                            <h5>@product2.Name</h5>
+                        </div>
                     </div>
-                    <div class="col" data-info="@JsonConvert.SerializeObject(Model)">
-                        @{ var product2 = dish.Products[i + 1].Product; }
-                        <img src="@product2.ImageUri" alt="@product2.Name">
-                        <h5>@product2.Name</h5>
-                    </div>
-                </div>
+                }
             }
-        }
-    </div>
+        </div>
+    }
 </div>

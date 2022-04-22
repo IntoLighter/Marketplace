@@ -1,13 +1,22 @@
-<div>
-    <img class="Image" alt="" src="">
-    <div class="Name"></div>
-    <h5 class="Weight text-black-50"></h5>
-    <div class="row justify-content-between">
-        <span class="Price col"></span>
-        <img class="Shop col" alt="" src="">
+<div class="Item col mx-3">
+    <img class="Image">
+    <div class="Name mb-2"></div>
+    <h6 class="text-black-50 mb-3">
+        <span class="Weight">@Model.Weight</span>
+        <span> г.</span>
+    </h6>
+    <div class="row justify-content-between mb-3">
+        <h4 class="col">
+            <span class="Price"></span>
+            <span> руб.</span>
+        </h4>
+        <img class="Shop col">
     </div>
-    <div class="row justify-content-center">
-        <span class="Count col"></span>
-        <button class="delete-from-cart-completely col btn btn-primary"></button>
+    <div class="row justify-content-between">
+        <h6 class="col">
+            <span class="Count"></span>
+            <span> штук</span>
+        </h6>
+        <button class="delete-from-cart-completely col btn btn-danger">удалить</button>
     </div>
 </div>

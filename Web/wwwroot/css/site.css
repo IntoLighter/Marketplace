@@ -3,8 +3,27 @@
 }
 .dd-container .dd-selected-image {
   max-width: none;
+  float: none;
+}
+.Item {
+  margin-bottom: 2rem;
+}
+.Item .Count {
+  border: none;
+  width: 5rem;
+}
+.Item .Item-data > * {
+  padding-left: 0;
+  padding-right: 0;
+}
+.dd-selected-image,
+.Shop {
   width: 160px;
   height: 45px;
+}
+.Image {
+  width: 322.5px;
+  height: 322.5px;
 }
 .form-floating-group-prepend input {
   border-bottom-left-radius: 0;

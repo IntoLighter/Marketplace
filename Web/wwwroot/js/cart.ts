@@ -1,94 +1,112 @@
 import {CartProduct, isAuthenticated} from "./site.js";
 
-function appendCartWidget(item: CartProduct): JQuery<HTMLDivElement> {
-    $.get('~/html/cartWidget.html', function (widget: JQuery<HTMLDivElement>) {
-        widget.data('id', item.productId)
+function appendCartProductWidget(item: CartProduct, row: JQuery<HTMLDivElement>) {
+    $.get('html/cartWidget.html', function (widget: any) {
+        widget = $(widget)
         widget.find('.Image').attr('src', item.imageUri)
         widget.find('.Name').text(item.name)
         widget.find('.Weight').text(item.weight)
         widget.find('.Price').text(item.price)
-        widget.find('Shop').attr('src', `~/img/shops/${item.shopName}`)
-        widget.find('Shop').attr('alt', `${item.shopName}`)
+        widget.find('.Shop').attr('src', `img/shops/${item.shopName}.png`)
+        widget.find('.Shop').attr('alt', item.shopName)
         widget.find('.Count').text(item.count)
-        return widget
+        row.append(widget)
     })
-    throw new Error('Did not find cart widget')
 }
 
 let products: CartProduct[] = []
 
 const openRequest = window.indexedDB.open('marketplace', 1)
-let cartStore : IDBObjectStore 
+let objectStore: IDBObjectStore
 
 openRequest.onsuccess = () => {
-    cartStore = openRequest.result.transaction('cart', 'readwrite').objectStore('cart')
-    const cursorRequest = cartStore.openCursor()
+    objectStore = openRequest.result.transaction('cart', 'readwrite').objectStore('cart')
+    const cursorRequest = objectStore.openCursor()
 
     cursorRequest.onsuccess = e => {
         // @ts-ignore
         const cursor = e.target.result
-        if (!cursor) {
-            console.log(`Db doesn't have cart products, trying to fetch from server`)
-            if (isAuthenticated()) {
-                $.get('/Areas/Cart/GetProducts', products, () => {
-                    if (productsLength === 0) {
-                        console.log(`Server also doesn't have cart products`)
-                        return
-                    } else {
-                        $.each(products, (_, product) => {
-                            cartStore.add(product)
-                        })
-                        console.log(`Added products to db`)
+
+        function getRow(): JQuery<HTMLDivElement> {
+            return $('<div>', {
+                'class': 'row-cols-4 row',
+            });
+        }
+
+        objectStore.count().onsuccess = async e => {
+            // @ts-ignore
+            if (e.target.result === 0) {
+                console.log(`Db doesn't have cart products, trying to fetch from server`)
+                if (isAuthenticated()) {
+                    await $.get('/Areas/Cart/GetProducts', products, () => {
+                        if (products.length === 0) {
+                            console.log(`Server also doesn't have cart products`)
+                            return
+                        } else {
+                            $.each(products, (_, product) => {
+                                objectStore.add(product)
+                            })
+                            console.log(`Added products to db`)
+                        }
+                    })
+                }
+            } else if (isAuthenticated()) {
+                await $.get('Areas/Cart/GetProducts', products, () => {
+                    if (products.length == 0) {
+                        console.log(`Server doesn't have products, uploading to it from db`)
+                        if (cursor) {
+                            $.post('Areas/Cart/AddProduct', cursor.value)
+                        }
+                        cursor.continue()
                     }
+                    console.log(`Uploaded products to server`)
                 })
             }
-        } else if (isAuthenticated()) {
-            $.get('Areas/Cart/GetProducts', products, () => {
-                if (products.length == 0) {
-                    console.log(`Server doesn't have products, uploading to it from db`)
-                    if (cursor) {
-                        $.post('Areas/Cart/AddProduct', cursor.value)
+
+            objectStore.getAll().onsuccess = async e => {
+                // @ts-ignore
+                products = e.target.result
+                let productsLength = products.length;
+
+                let decrementCount = 0;
+                if (products.length % 4 !== 0) {
+                    while (productsLength % 4 !== 0) {
+                        productsLength--
+                        decrementCount++
                     }
-                    cursor.continue()
                 }
-                console.log(`Uploaded products to server`)
-            })
-        }
 
-        let productsLength = products.length;
-        let decrementCount = 0;
-        if (products.length % 4 != 0) {
-            while (productsLength % 4 != 0) {
-                productsLength--
-                decrementCount++;
-            }
-        }
+                const div = $('<div>')
 
-        for (let i = 0; i < productsLength; i += 4) {
-            const div = $('<div>', {
-                'class': 'row-cols-4 row justify-content-center',
-            })
-            div.append(appendCartWidget(products[i]))
-            div.append(appendCartWidget(products[i + 1]))
-            div.append(appendCartWidget(products[i + 2]))
-            div.append(appendCartWidget(products[i + 3]))
-            $(document).append(div)
-        }
+                for (let i = 0; i < productsLength; i += 4) {
+                    const row = getRow()
+                    appendCartProductWidget(products[i], row)
+                    appendCartProductWidget(products[i + 1], row)
+                    appendCartProductWidget(products[i + 2], row)
+                    appendCartProductWidget(products[i + 3], row)
+                    div.append(row)
+                }
 
-        if (products.length % 4 != 0) {
-            for (let i = 0; i < decrementCount; i++) {
-                appendCartWidget(products[productsLength + i])
+                if (products.length % 4 !== 0) {
+                    const row = getRow()
+                    for (let i = 0; i < decrementCount; i++) {
+                        appendCartProductWidget(products[i], row)
+                    }
+                    div.append(row)
+                }
+
+                $('main').append(div)
             }
         }
     }
 }
 
-$('.delete-from-cart-completely').on('click', function () {
-    const parent = $(this).parent().parent()
+$('.delete-from-cart-completely').on('click', async function () {
+    const parent = $(this).parent('.Item')
     const id = parent.data('id')
     const shopName = parent.find('.Shop').attr('alt')
     if (isAuthenticated()) {
-        $.post('Areas/Cart/DeleteProductCompletely', {
+        await $.post('Areas/Cart/DeleteProductCompletely', {
             id: id,
             shopName: shopName
         }, () => {
@@ -96,6 +114,6 @@ $('.delete-from-cart-completely').on('click', function () {
         })
     }
 
-    cartStore.delete([id, shopName])
+    objectStore.delete([id, shopName])
     window.location.reload()
 })
