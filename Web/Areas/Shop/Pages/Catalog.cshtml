@@ -9,17 +9,30 @@
         <div class="col-md-2">
             <div>Категории</div>
             <div class="list-group">
-                <a href="#" class="list-group-item">Супы</a>
-                <a href="#" class="list-group-item">Мясные блюда</a>
-                <a href="#" class="list-group-item">Рыбные блюда</a>
-                <a href="#" class="list-group-item">Салаты</a>
-                <a href="#" class="list-group-item">Десерты</a>
+                <form method="post">
+                    <button type="submit" asp-page-handler="Products">Продукты</button>
+                </form>
+                <form method="post">
+                    <button type="submit" asp-page-handler="Soups">Супы</button>
+                </form>
+                <form method="post">
+                    <button type="submit" asp-page-handler="MeatDishes">Мясные блюда</button>
+                </form>
+                <form method="post">
+                    <button type="submit" asp-page-handler="FishDishes">Рыбные блюда</button>
+                </form>
+                <form method="post">
+                    <button type="submit" asp-page-handler="Salads">Салаты</button>
+                </form>
+                <form method="post">
+                    <button type="submit" asp-page-handler="Desserts">Десерты</button>
+                </form>
             </div>
         </div>
         <div class="col-md-10">
-            @foreach (var product in Model.Products)
+            @foreach (var item in Model.Items)
             {
-                <partial name="_IItemWidget" model="product"/>
+                <partial name="_IItemWidget" model="item"/>
             }
         </div>
     </div>

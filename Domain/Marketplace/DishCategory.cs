@@ -2,5 +2,5 @@ namespace Domain.Marketplace;
 
 public enum DishCategory
 {
-    Soup, Salad, Dessert, Garnish, Bakery
+    Soup, Meat, Fish, Salad, Dessert
 }
