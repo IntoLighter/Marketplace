@@ -14,8 +14,6 @@ namespace Web.Areas.Shop.Pages
         public List<Product> Products { get; set; }
         public List<IItem> Items { get; set; }
 
-        [BindProperty(SupportsGet = true)]       //
-        public string q { get; set; }            //
         public CatalogModel(IDbContext db)
         {
             _context = db;
@@ -26,6 +24,21 @@ namespace Web.Areas.Shop.Pages
         {
             Items = Dishes.Cast<IItem>().ToList();
             Items.AddRange(Products.Cast<IItem>().ToList());
+        }
+        public void OnPost(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                Items = Dishes.Cast<IItem>().ToList();
+                Items.AddRange(Products.Cast<IItem>().ToList());
+            }
+            else
+            {
+                Items = Dishes.Where(e => e.Name.ToLower().Contains(name.ToLower()) ||
+                                          e.Category.ToString()
+                                          .Contains(name)).Cast<IItem>().ToList();
+                Items.AddRange(Products.Where(e => e.Name.ToLower().Contains(name.ToLower())).Cast<IItem>().ToList());
+            }
         }
         public void OnPostProducts()
         {

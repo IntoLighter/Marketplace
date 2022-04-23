@@ -22,8 +22,8 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <a class="nav-link" asp-area="Shop" asp-page="/Catalog">Список блюд</a>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Найти блюдо" aria-label="Search">
+                <form class="d-flex" asp-area="Shop" asp-page="/Catalog">
+                    <input class="form-control me-2" name="name" id="name" type="search" placeholder="Найти блюдо" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Найти</button>
                 </form>
                 <partial name="_LoginPartial"/>
