@@ -336,7 +336,7 @@ namespace Infrastructure.Migrations
 
                     {81, Convert.ToInt32(Shop.Alley), 52},
                     {81, Convert.ToInt32(Shop.Lenta), 93},
-                    {18, Convert.ToInt32(Shop.FixPrice), 130},
+                    {81, Convert.ToInt32(Shop.FixPrice), 130},
 
                     {82, Convert.ToInt32(Shop.Alley), 148},
                     {82, Convert.ToInt32(Shop.Lenta), 100},
@@ -458,9 +458,9 @@ namespace Infrastructure.Migrations
                     {111, Convert.ToInt32(Shop.Lenta), 120},
                     {111, Convert.ToInt32(Shop.FixPrice), 118},
 
-                    {122, Convert.ToInt32(Shop.Alley), 391},
-                    {122, Convert.ToInt32(Shop.Lenta), 278},
-                    {122, Convert.ToInt32(Shop.FixPrice), 187},
+                    {112, Convert.ToInt32(Shop.Alley), 391},
+                    {112, Convert.ToInt32(Shop.Lenta), 278},
+                    {112, Convert.ToInt32(Shop.FixPrice), 187},
 
                     {113, Convert.ToInt32(Shop.Alley), 141},
                     {113, Convert.ToInt32(Shop.Lenta), 124},
