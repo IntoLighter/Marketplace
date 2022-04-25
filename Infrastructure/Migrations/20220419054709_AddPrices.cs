@@ -198,9 +198,9 @@ namespace Infrastructure.Migrations
                     {46, Convert.ToInt32(Shop.Lenta), 233},
                     {46, Convert.ToInt32(Shop.FixPrice), 337},
 
-                    {47, Convert.ToInt32(Shop.Alley), 29},
-                    {47, Convert.ToInt32(Shop.Lenta), 28},
-                    {47, Convert.ToInt32(Shop.FixPrice), 22},
+                    {47, Convert.ToInt32(Shop.Alley), 139},
+                    {47, Convert.ToInt32(Shop.Lenta), 100},
+                    {47, Convert.ToInt32(Shop.FixPrice), 124},
 
                     {48, Convert.ToInt32(Shop.Alley), 551},
                     {48, Convert.ToInt32(Shop.Lenta), 623},

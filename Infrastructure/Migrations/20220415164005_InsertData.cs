@@ -61,7 +61,7 @@ namespace Infrastructure.Migrations
                     {"Уксус бальзамический organic I.G.P Modena DETO ANDREA MILANO", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/109/442/173/991/711/58/600004625701b0.jpeg", 500},
                     {"Тунец филе в собственном соку 185гр 2 шт", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/898/552/328/318/182/7/600005306356b0.jpeg", 185},
                     {"Сок лимона Lemon juice TRS  ТиАрЭс", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/918/337/068/471/146/600006454276b0.jpeg", 250},
-                    {"Морковь", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/-63/786/730/911/211/437/100029842236b0.jpg", 500},
+                    {"Какао Белый мишка  растворимое гранулированное с витамином C", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/65/97/53/51/55/14/100024355362b0.jpg", 375},
                     {"Уксус рисовый PRB 2 шт. по 500 мл", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/369/196/892/104/195/1/600004747170b0.jpeg", 500},
                     {"Лимоны Узбекистан", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/192/602/445/521/916/31/100030679335b0.jpg", 100},
                     {"Перец острый дробленый", "https://main-cdn.sbermegamarket.ru/mid9/hlr-system/120/658/891/192/904/0/600004674534b0.jpeg", 250},
