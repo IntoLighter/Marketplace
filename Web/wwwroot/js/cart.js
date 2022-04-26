@@ -8,25 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { isAuthenticated } from "./site.js";
-function appendCartProductWidget(item, row) {
+function appendCartProductWidget(product, row) {
     $.get('html/cartWidget.html', function (widget) {
         widget = $(widget);
-        widget.find('.Image').attr('src', item.imageUri);
-        widget.find('.Name').text(item.name);
-        widget.find('.Weight').text(item.weight);
-        widget.find('.Price').text(item.price);
-        widget.find('.Shop').attr('src', `img/shops/${item.shopName}.png`);
-        widget.find('.Shop').attr('alt', item.shopName);
-        widget.find('.Count').text(item.count);
+        widget.data('id', product.id);
+        widget.find('.Image').attr('src', product.imageUri);
+        widget.find('.Name').text(product.name);
+        widget.find('.Weight').text(product.weight);
+        widget.find('.Price').text(product.price);
+        widget.find('.Shop').attr('src', `img/shops/${product.shopName}.png`);
+        widget.find('.Shop').attr('alt', product.shopName);
+        widget.find('.Count').text(product.count);
         row.append(widget);
     });
 }
 let products = [];
 const openRequest = window.indexedDB.open('marketplace', 1);
-let objectStore;
+let db;
 openRequest.onsuccess = () => {
-    objectStore = openRequest.result.transaction('cart', 'readwrite').objectStore('cart');
-    const cursorRequest = objectStore.openCursor();
+    db = openRequest.result;
+    const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
     cursorRequest.onsuccess = e => {
         // @ts-ignore
         const cursor = e.target.result;
@@ -66,7 +67,7 @@ openRequest.onsuccess = () => {
                     console.log(`Uploaded products to server`);
                 });
             }
-            objectStore.getAll().onsuccess = (e) => __awaiter(void 0, void 0, void 0, function* () {
+            objectStore.getAll().onsuccess = e => {
                 // @ts-ignore
                 products = e.target.result;
                 let productsLength = products.length;
@@ -94,25 +95,34 @@ openRequest.onsuccess = () => {
                     div.append(row);
                 }
                 $('main').append(div);
-            });
+            };
         });
     };
 };
-$('.delete-from-cart-completely').on('click', function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        const parent = $(this).parent('.Item');
-        const id = parent.data('id');
-        const shopName = parent.find('.Shop').attr('alt');
-        if (isAuthenticated()) {
-            yield $.post('Areas/Cart/DeleteProductCompletely', {
-                id: id,
-                shopName: shopName
-            }, () => {
-                console.log(`{${id}, ${shopName}} deleted completely on server`);
-            });
-        }
-        objectStore.delete([id, shopName]);
-        window.location.reload();
-    });
+$('main').on('click', '.delete-from-cart-completely', function () {
+    const parent = $(this).parents('.Item');
+    const id = parent.data('id');
+    const shopName = parent.find('.Shop').attr('alt');
+    const pk = { id: id, shopName: shopName };
+    console.log(pk);
+    const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+    if (isAuthenticated()) {
+        $.post('Areas/Cart/DeleteProductCompletely', {
+            id: id,
+            shopName: shopName
+        }, () => {
+            console.log(`${JSON.stringify(pk)} deleted completely on server`);
+        });
+    }
+    objectStore.delete([id, shopName]);
+    // @ts-ignore
+    transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`);
+    window.location.reload();
 });
+function getIndexedDbTriplet() {
+    const transaction = db.transaction('cart', 'readwrite');
+    const objectStore = transaction.objectStore('cart');
+    const cursorRequest = objectStore.openCursor();
+    return { transaction, objectStore, cursorRequest };
+}
 //# sourceMappingURL=cart.js.map

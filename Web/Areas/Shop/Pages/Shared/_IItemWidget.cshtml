@@ -6,12 +6,12 @@
 @inject IGetIItemInformation _injector
 
 <div class="Item" data-prices="@JsonConvert.SerializeObject(_injector.GetPricesForShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
-    <div class="text-center">
+    <div class="text-center mb-3">
         <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
     </div>
     <div class="row Item-data mb-3">
         <div class="col">
-            <div class="Name">@Model.Name</div>
+            <h5 class="lead Name">@Model.Name</h5>
             <h6 class="text-black-50 mb-2">
                 <span class="Weight">@Model.Weight</span>
                 <span> г.</span>
@@ -35,25 +35,11 @@
         <div class="dish">
             @{
                 <h6>Состоит из:</h6>
-
-                var productsLength = dish.Products.Count;
-                if (dish.Products.Count % 2 == 1)
+                foreach (var product in dish.Products.Select(productWrapper => productWrapper.Product))
                 {
-                    productsLength--;
-                }
-                for (var i = 0; i < productsLength; i += 2)
-                {
-                    <div class="row mb-2 row-cols-2">
-                        <div class="col" data-info="@JsonConvert.SerializeObject(dish.Products[i])">
-                            @{ var product1 = dish.Products[i].Product; }
-                            <img src="@product1.ImageUri" alt="@product1.Name">
-                            <h5>@product1.Name</h5>
-                        </div>
-                        <div class="col" data-info="@JsonConvert.SerializeObject(dish.Products[i + 1])">
-                            @{ var product2 = dish.Products[i + 1].Product; }
-                            <img src="@product2.ImageUri" alt="@product2.Name">
-                            <h5>@product2.Name</h5>
-                        </div>
+                    <div class="col" data-info="@JsonConvert.SerializeObject(product)">
+                        <img src="@product.ImageUri" alt="@product.Name">
+                        <h4 class="text-muted">@product.Name</h4>
                     </div>
                 }
             }

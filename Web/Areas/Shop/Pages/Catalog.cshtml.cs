@@ -4,6 +4,7 @@ using Domain.Marketplace;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Areas.Shop.Pages
 {
@@ -12,13 +13,13 @@ namespace Web.Areas.Shop.Pages
         private readonly IDbContext _context;
         public List<Dish> Dishes { get; set; }
         public List<Product> Products { get; set; }
-        public List<IItem> Items { get; set; }
+        public List<IItem> Items { get; set; } = null!;
 
         public CatalogModel(IDbContext db)
         {
             _context = db;
             Products = _context.Products.ToList();
-            Dishes = _context.Dishes.ToList();
+            Dishes = _context.Dishes.Include(e => e.Products).ToList();
         }
         public void OnGet()
         {

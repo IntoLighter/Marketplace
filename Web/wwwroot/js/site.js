@@ -1,7 +1,7 @@
 export class CartProduct {
-    constructor(productId, name, price, shopName, imageUri, weight) {
+    constructor(id, name, price, shopName, imageUri, weight) {
         this.count = 1;
-        this.productId = productId;
+        this.id = id;
         this.name = name;
         this.price = price;
         this.shopName = shopName;
@@ -19,7 +19,7 @@ openRequest.onerror = () => console.log('Db failed to open');
 openRequest.onupgradeneeded = e => {
     // @ts-ignore
     db = e.target.result;
-    const objectStore = db.createObjectStore('cart', { keyPath: ['productId', 'shopName'] });
+    db.createObjectStore('cart', { keyPath: ['id', 'shopName'] });
     console.log('Db set up');
 };
 $('.add-to-cart').on('click', function () {
@@ -41,7 +41,7 @@ $('.add-to-cart').on('click', function () {
     count.val(newNumber);
     widget.parent().find('.delete-from-cart').removeAttr('disabled');
     function addProduct(product) {
-        const pk = { productId: product.productId, shopName: product.shopName };
+        const pk = { id: product.id, shopName: product.shopName };
         if (isAuthenticated()) {
             $.post('Areas/Cart/AddProduct', product, () => {
                 console.log(`Sent ${JSON.stringify(pk)}  to server`);
@@ -52,7 +52,7 @@ $('.add-to-cart').on('click', function () {
             // @ts-ignore
             const cursor = e.target.result;
             if (cursor) {
-                if (cursor.primaryKey[0] === pk.productId && cursor.primaryKey[1] === pk.shopName) {
+                if (cursor.primaryKey[0] === pk.id && cursor.primaryKey[1] === pk.shopName) {
                     cursor.value.count++;
                     cursor.update(cursor.value);
                     // @ts-ignore
@@ -61,11 +61,12 @@ $('.add-to-cart').on('click', function () {
                 }
                 cursor.continue();
             }
-            objectStore.add(product);
+            // @ts-ignore
+            objectStore.put(product);
             transaction.oncomplete = () => console.log(`Added ${JSON.stringify(pk)} to db`);
         };
         // @ts-ignore
-        transaction.onerror = e => console.log(`Transaction to add product failed: ${e.target.error}`);
+        transaction.onerror = e => console.log(`Transaction to add product failed: ${JSON.stringify(pk)} ${e.target.error}`);
     }
 });
 $('.delete-from-cart').on('click', function () {
@@ -89,9 +90,10 @@ $('.delete-from-cart').on('click', function () {
         $(this).attr('disabled', 'disabled');
     }
     function deleteProduct(id, shopName) {
+        const pk = { id: id, shopName: shopName };
         if (isAuthenticated()) {
-            $.post('Areas/Cart/Delete', { id, shopName }, () => console.log(`Sent {${id}, ${shopName}} to server`))
-                .fail(() => console.log(`Failed to send {${id}, ${shopName}} to server`));
+            $.post('Areas/Cart/Delete', { id, shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+                .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
         const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
         cursorRequest.onsuccess = e => {
@@ -102,38 +104,50 @@ $('.delete-from-cart').on('click', function () {
                     cursor.value.count--;
                     if (cursor.value.count === 0) {
                         objectStore.delete([id, shopName]);
-                        transaction.oncomplete = () => console.log(`Deleted {${id}, ${shopName} in db`);
+                        transaction.oncomplete = () => console.log(`Deleted ${JSON.stringify(pk)} in db`);
                         return;
                     }
                     cursor.update(cursor.value);
-                    transaction.oncomplete = () => console.log(`Found {${id}, ${shopName}} in db and decremented`);
+                    transaction.oncomplete = () => console.log(`Found ${JSON.stringify(pk)} in db and decremented`);
                     return;
                 }
                 cursor.continue();
             }
         };
         // @ts-ignore
-        transaction.onerror = e => console.log(`Transaction to delete product failed: ${e.target.result}`);
+        transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.result}`);
     }
 });
 $('.Count').on('input', function () {
     const widget = $(this).parents('.Item');
     const shopName = widget.find('.Shop').val();
-    const count = widget.find('.Count').val();
+    const countWidget = widget.find('.Count');
+    const count = countWidget.val();
+    if (count < 0) {
+        countWidget.val(0);
+        return;
+    }
     switch (widget.data('item-type')) {
         case "product":
-            updateCount(widget.data('item-id'), shopName, count);
+            const product = new CartProduct(widget.data('item-id'), widget.find('.Name').text(), widget.find('.Price').text(), widget.find('.dd-selected-text').text(), widget.find('.Image').attr('src'), widget.find('.Weight').text());
+            product.count = count;
+            updateCount(product);
             break;
         case "dish":
             $.each(widget.find('.dish').children('.col'), (_, val) => {
-                updateCount($(val).data('info').Id, shopName, count);
+                const product = $(val).data('info');
+                product.count = count;
+                updateCount(product);
             });
             break;
     }
-    function updateCount(id, shopName, count) {
+    function updateCount(product) {
+        const id = product.id;
+        const shopName = product.shopName;
+        const pk = { id: id, shopName: shopName };
         if (isAuthenticated()) {
-            $.post('Areas/Cart/UpdateCount', { id, shopName }, () => console.log(`Sent {${id}, ${shopName}} to server`))
-                .fail(() => console.log(`Failed to send {${id}, ${shopName}} to server`));
+            $.post('Areas/Cart/UpdateCount', { id, shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+                .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
         const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
         cursorRequest.onsuccess = e => {
@@ -146,16 +160,17 @@ $('.Count').on('input', function () {
                         objectStore.delete([id, shopName]);
                         widget.find('.Count').attr('hidden', 'hidden');
                         widget.find('.delete-from-cart').attr('hidden', 'hidden');
+                        console.log(`Found ${JSON.stringify(pk)} in db and deleted`);
                     }
                     cursor.update(cursor.value);
-                    console.log(`Found {${id}, ${shopName}} in db and deleted`);
                     return;
                 }
                 cursor.continue();
+                objectStore.put(product).onsuccess = () => console.log(`Added product ${pk} to db`);
             }
         };
-        objectStore.delete([id, shopName]);
-        transaction.onerror = () => console.log('Transaction to delete product failed');
+        // @ts-ignore
+        transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`);
     }
 });
 const ddData = [
@@ -192,7 +207,7 @@ $('.Shop').ddslick({
         select.find('.Price').text(prices[selected.selectedData.value]);
     }
 });
-export function getIndexedDbTriplet() {
+function getIndexedDbTriplet() {
     const transaction = db.transaction('cart', 'readwrite');
     const objectStore = transaction.objectStore('cart');
     const cursorRequest = objectStore.openCursor();
@@ -200,9 +215,7 @@ export function getIndexedDbTriplet() {
 }
 export function isAuthenticated() {
     $.get(`/Identity/Account/IsAuthenticated`, {}, (resp) => {
-        if (resp) {
-            return true;
-        }
+        return resp;
     });
     return false;
 }

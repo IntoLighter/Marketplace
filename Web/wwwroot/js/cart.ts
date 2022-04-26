@@ -1,15 +1,16 @@
 import {CartProduct, isAuthenticated} from "./site.js";
 
-function appendCartProductWidget(item: CartProduct, row: JQuery<HTMLDivElement>) {
+function appendCartProductWidget(product: CartProduct, row: JQuery<HTMLDivElement>) {
     $.get('html/cartWidget.html', function (widget: any) {
         widget = $(widget)
-        widget.find('.Image').attr('src', item.imageUri)
-        widget.find('.Name').text(item.name)
-        widget.find('.Weight').text(item.weight)
-        widget.find('.Price').text(item.price)
-        widget.find('.Shop').attr('src', `img/shops/${item.shopName}.png`)
-        widget.find('.Shop').attr('alt', item.shopName)
-        widget.find('.Count').text(item.count)
+        widget.data('id', product.id)
+        widget.find('.Image').attr('src', product.imageUri)
+        widget.find('.Name').text(product.name)
+        widget.find('.Weight').text(product.weight)
+        widget.find('.Price').text(product.price)
+        widget.find('.Shop').attr('src', `img/shops/${product.shopName}.png`)
+        widget.find('.Shop').attr('alt', product.shopName)
+        widget.find('.Count').text(product.count)
         row.append(widget)
     })
 }
@@ -17,11 +18,11 @@ function appendCartProductWidget(item: CartProduct, row: JQuery<HTMLDivElement>)
 let products: CartProduct[] = []
 
 const openRequest = window.indexedDB.open('marketplace', 1)
-let objectStore: IDBObjectStore
+let db: IDBDatabase
 
 openRequest.onsuccess = () => {
-    objectStore = openRequest.result.transaction('cart', 'readwrite').objectStore('cart')
-    const cursorRequest = objectStore.openCursor()
+    db = openRequest.result
+    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
 
     cursorRequest.onsuccess = e => {
         // @ts-ignore
@@ -63,7 +64,7 @@ openRequest.onsuccess = () => {
                 })
             }
 
-            objectStore.getAll().onsuccess = async e => {
+            objectStore.getAll().onsuccess = e => {
                 // @ts-ignore
                 products = e.target.result
                 let productsLength = products.length;
@@ -101,19 +102,34 @@ openRequest.onsuccess = () => {
     }
 }
 
-$('.delete-from-cart-completely').on('click', async function () {
-    const parent = $(this).parent('.Item')
+$('main').on('click', '.delete-from-cart-completely', function () {
+    const parent = $(this).parents('.Item')
     const id = parent.data('id')
     const shopName = parent.find('.Shop').attr('alt')
+    const pk = {id: id, shopName: shopName}
+    console.log(pk)
+
+    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
+
     if (isAuthenticated()) {
-        await $.post('Areas/Cart/DeleteProductCompletely', {
+        $.post('Areas/Cart/DeleteProductCompletely', {
             id: id,
             shopName: shopName
         }, () => {
-            console.log(`{${id}, ${shopName}} deleted completely on server`)
+            console.log(`${JSON.stringify(pk)} deleted completely on server`)
         })
     }
 
     objectStore.delete([id, shopName])
+
+    // @ts-ignore
+    transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`)
     window.location.reload()
 })
+
+function getIndexedDbTriplet() {
+    const transaction = db.transaction('cart', 'readwrite')
+    const objectStore = transaction.objectStore('cart')
+    const cursorRequest = objectStore.openCursor()
+    return {transaction, objectStore, cursorRequest};
+}
