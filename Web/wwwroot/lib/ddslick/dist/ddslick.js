@@ -31,7 +31,8 @@
             showSelectedHTML: true,
             clickOffToClose: true,
             embedCSS: true,
-            onSelected: function () { }
+            onSelected: function () {
+            }
         },
 
         ddSelectHtml = '<div class="dd-select"><input class="dd-selected-value" type="hidden" /><a class="dd-selected"></a><span class="dd-pointer dd-pointer-down"></span></div>',
@@ -114,13 +115,13 @@
                     ddOptions = obj.find('.dd-options');
 
                 //Set widths
-                ddOptions.css({ width: options.width });
-                ddSelect.css({ width: options.width, background: options.background });
-                obj.css({ width: options.width });
+                ddOptions.css({width: options.width});
+                ddSelect.css({width: options.width, background: options.background});
+                obj.css({width: options.width});
 
                 //Set height
                 if (options.height != null)
-                    ddOptions.css({ height: options.height, overflow: 'auto' });
+                    ddOptions.css({height: options.height, overflow: 'auto'});
 
                 //Add ddOptions to the container. Replace with template engine later.
                 $.each(options.data, function (index, item) {
@@ -148,8 +149,7 @@
                 //Check if needs to show the select text, otherwise show selected or default selection
                 if (options.selectText.length > 0 && options.defaultSelectedIndex == null) {
                     obj.find('.dd-selected').html(options.selectText);
-                }
-                else {
+                } else {
                     var index = (options.defaultSelectedIndex != null && options.defaultSelectedIndex >= 0 && options.defaultSelectedIndex < options.data.length)
                         ? options.defaultSelectedIndex
                         : 0;
@@ -170,7 +170,9 @@
                 //Click anywhere to close
                 if (options.clickOffToClose) {
                     ddOptions.addClass('dd-click-off-close');
-                    obj.on('click.ddslick', function (e) { e.stopPropagation(); });
+                    obj.on('click.ddslick', function (e) {
+                        e.stopPropagation();
+                    });
                     $('body').on('click', function () {
                         $('.dd-open').removeClass('dd-open');
                         $('.dd-click-off-close').slideUp(50).siblings('.dd-select').find('.dd-pointer').removeClass('dd-pointer-up');
@@ -183,7 +185,7 @@
     //Public method to select an option by its index
     methods.select = function (options) {
         return this.each(function () {
-            if (options.index!==undefined)
+            if (options.index !== undefined)
                 selectIndex($(this), options.index);
             if (options.id)
                 selectId($(this), options.id);
@@ -309,8 +311,7 @@
             ddOptions.slideUp('fast');
             ddPointer.removeClass('dd-pointer-up');
             $this.removeClass('dd-open');
-        }
-        else {
+        } else {
             $this.addClass('dd-open');
             ddOptions.slideDown('fast');
             ddPointer.addClass('dd-pointer-up');

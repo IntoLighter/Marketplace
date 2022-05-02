@@ -9,6 +9,7 @@ export class CartProduct {
         this.weight = weight;
     }
 }
+
 const openRequest = window.indexedDB.open('marketplace', 1);
 let db;
 openRequest.onsuccess = () => {
@@ -19,7 +20,7 @@ openRequest.onerror = () => console.log('Db failed to open');
 openRequest.onupgradeneeded = e => {
     // @ts-ignore
     db = e.target.result;
-    db.createObjectStore('cart', { keyPath: ['id', 'shopName'] });
+    db.createObjectStore('cart', {keyPath: ['id', 'shopName']});
     console.log('Db set up');
 };
 $('.add-to-cart').on('click', function () {
@@ -40,14 +41,15 @@ $('.add-to-cart').on('click', function () {
     newNumber++;
     count.val(newNumber);
     widget.parent().find('.delete-from-cart').removeAttr('disabled');
+
     function addProduct(product) {
-        const pk = { id: product.id, shopName: product.shopName };
+        const pk = {id: product.id, shopName: product.shopName};
         if (isAuthenticated()) {
             $.post('Areas/Cart/AddProduct', product, () => {
                 console.log(`Sent ${JSON.stringify(pk)}  to server`);
             }).fail(() => console.log(`Failed to send {${JSON.stringify(pk)} to server`));
         }
-        const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
         cursorRequest.onsuccess = e => {
             // @ts-ignore
             const cursor = e.target.result;
@@ -89,13 +91,14 @@ $('.delete-from-cart').on('click', function () {
     if (newNumber === 0) {
         $(this).attr('disabled', 'disabled');
     }
+
     function deleteProduct(id, shopName) {
-        const pk = { id: id, shopName: shopName };
+        const pk = {id: id, shopName: shopName};
         if (isAuthenticated()) {
-            $.post('Areas/Cart/Delete', { id, shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+            $.post('Areas/Cart/Delete', {id, shopName}, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
                 .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
-        const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
         cursorRequest.onsuccess = e => {
             // @ts-ignore
             const cursor = e.target.result;
@@ -141,15 +144,16 @@ $('.Count').on('input', function () {
             });
             break;
     }
+
     function updateCount(product) {
         const id = product.id;
         const shopName = product.shopName;
-        const pk = { id: id, shopName: shopName };
+        const pk = {id: id, shopName: shopName};
         if (isAuthenticated()) {
-            $.post('Areas/Cart/UpdateCount', { id, shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+            $.post('Areas/Cart/UpdateCount', {id, shopName}, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
                 .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
-        const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
         cursorRequest.onsuccess = e => {
             // @ts-ignore
             const cursor = e.target.result;
@@ -207,16 +211,19 @@ $('.Shop').ddslick({
         select.find('.Price').text(prices[selected.selectedData.value]);
     }
 });
+
 function getIndexedDbTriplet() {
     const transaction = db.transaction('cart', 'readwrite');
     const objectStore = transaction.objectStore('cart');
     const cursorRequest = objectStore.openCursor();
-    return { transaction, objectStore, cursorRequest };
+    return {transaction, objectStore, cursorRequest};
 }
+
 export function isAuthenticated() {
     $.get(`/Identity/Account/IsAuthenticated`, {}, (resp) => {
         return resp;
     });
     return false;
 }
+
 //# sourceMappingURL=site.js.map

@@ -1,13 +1,36 @@
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { isAuthenticated } from "./site.js";
+import {isAuthenticated} from "./site.js";
+
 function appendCartProductWidget(product, row) {
     $.get('html/cartWidget.html', function (widget) {
         widget = $(widget);
@@ -22,20 +45,23 @@ function appendCartProductWidget(product, row) {
         row.append(widget);
     });
 }
+
 let products = [];
 const openRequest = window.indexedDB.open('marketplace', 1);
 let db;
 openRequest.onsuccess = () => {
     db = openRequest.result;
-    const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
     cursorRequest.onsuccess = e => {
         // @ts-ignore
         const cursor = e.target.result;
+
         function getRow() {
             return $('<div>', {
                 'class': 'row-cols-4 row',
             });
         }
+
         objectStore.count().onsuccess = (e) => __awaiter(void 0, void 0, void 0, function* () {
             // @ts-ignore
             if (e.target.result === 0) {
@@ -44,9 +70,8 @@ openRequest.onsuccess = () => {
                     yield $.get('/Areas/Cart/GetProducts', products, () => {
                         if (products.length === 0) {
                             console.log(`Server also doesn't have cart products`);
-                            return;
-                        }
-                        else {
+
+                        } else {
                             $.each(products, (_, product) => {
                                 objectStore.add(product);
                             });
@@ -54,8 +79,7 @@ openRequest.onsuccess = () => {
                         }
                     });
                 }
-            }
-            else if (isAuthenticated()) {
+            } else if (isAuthenticated()) {
                 yield $.get('Areas/Cart/GetProducts', products, () => {
                     if (products.length == 0) {
                         console.log(`Server doesn't have products, uploading to it from db`);
@@ -103,9 +127,9 @@ $('main').on('click', '.delete-from-cart-completely', function () {
     const parent = $(this).parents('.Item');
     const id = parent.data('id');
     const shopName = parent.find('.Shop').attr('alt');
-    const pk = { id: id, shopName: shopName };
+    const pk = {id: id, shopName: shopName};
     console.log(pk);
-    const { transaction, objectStore, cursorRequest } = getIndexedDbTriplet();
+    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
     if (isAuthenticated()) {
         $.post('Areas/Cart/DeleteProductCompletely', {
             id: id,
@@ -119,10 +143,12 @@ $('main').on('click', '.delete-from-cart-completely', function () {
     transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`);
     window.location.reload();
 });
+
 function getIndexedDbTriplet() {
     const transaction = db.transaction('cart', 'readwrite');
     const objectStore = transaction.objectStore('cart');
     const cursorRequest = objectStore.openCursor();
-    return { transaction, objectStore, cursorRequest };
+    return {transaction, objectStore, cursorRequest};
 }
+
 //# sourceMappingURL=cart.js.map

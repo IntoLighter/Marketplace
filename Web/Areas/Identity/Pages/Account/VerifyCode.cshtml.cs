@@ -1,29 +1,24 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Net.Security;
 using Infrastructure.Authentication;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using Twilio;
-using Twilio.Rest.Verify.V2;
 using Twilio.Rest.Verify.V2.Service;
-using Twilio.Types;
 using Web.Areas.Identity.Pages.Account.Logic.VerifyCode;
 
 namespace Web.Areas.Identity.Pages.Account;
 
 public class VerifyCodeModel : PageModel
 {
-    private readonly TwilioVerificationCredentials _verificationCredentials;
-    private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly ILogger<VerifyCodeModel> _logger;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly TwilioVerificationCredentials _verificationCredentials;
 
     public VerifyCodeModel(IOptions<TwilioVerificationCredentials> verificationCredentials,
-        UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, 
+        UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
         ILogger<VerifyCodeModel> logger)
     {
         _userManager = userManager;
@@ -36,15 +31,6 @@ public class VerifyCodeModel : PageModel
     [BindProperty] public string? ReturnUrl { get; set; }
     [BindProperty] public string PhoneNumber { get; set; } = string.Empty;
     [BindProperty] public SuccessCallbackType CallbackType { get; set; }
-
-    public class InputModel
-    {
-        [Required(ErrorMessage = "Код необходим")]
-        [Display(Name = "Код подтверждения")]
-        [Phone(ErrorMessage = "Некорректный код подтверждения")]
-        [StringLength(4, MinimumLength = 4, ErrorMessage = "Должен состоять из 4 цифр")]
-        public string Code { get; set; } = string.Empty;
-    }
 
     public async Task OnGetAsync(string phoneNumber, string? returnUrl, SuccessCallbackType callbackType)
     {
@@ -70,10 +56,7 @@ public class VerifyCodeModel : PageModel
             pathServiceSid: _verificationCredentials.VerificationSId
         );
 
-        if (msg.Valid == false)
-        {
-            throw new Exception("Sms code VerificationCheck is invalid");
-        }
+        if (msg.Valid == false) throw new Exception("Sms code VerificationCheck is invalid");
 
         AppUser? user;
         switch (CallbackType)
@@ -93,10 +76,7 @@ public class VerifyCodeModel : PageModel
                     {
                         var error = "";
                         var errors = result.Errors.ToList();
-                        for (var i = 0; i < errors.Count; i++)
-                        {
-                            error += $"{i + 1}: {errors[i].Description}\n";
-                        }
+                        for (var i = 0; i < errors.Count; i++) error += $"{i + 1}: {errors[i].Description}\n";
 
                         throw new Exception($"Can't create new user: \n{error}");
                     }
@@ -113,5 +93,14 @@ public class VerifyCodeModel : PageModel
         }
 
         return Redirect(ReturnUrl ?? Url.Content("~/"));
+    }
+
+    public class InputModel
+    {
+        [Required(ErrorMessage = "Код необходим")]
+        [Display(Name = "Код подтверждения")]
+        [Phone(ErrorMessage = "Некорректный код подтверждения")]
+        [StringLength(4, MinimumLength = 4, ErrorMessage = "Должен состоять из 4 цифр")]
+        public string Code { get; set; } = string.Empty;
     }
 }

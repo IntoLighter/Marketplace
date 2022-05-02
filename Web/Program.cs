@@ -1,13 +1,7 @@
-using System.Configuration;
 using Application;
-using Domain;
 using Infrastructure;
 using Infrastructure.Authentication;
-using Infrastructure.Identity;
-using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Twilio;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

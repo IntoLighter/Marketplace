@@ -1,5 +1,3 @@
-using System.Data;
-using Domain.Cart;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -9,8 +7,8 @@ namespace Web.Areas.Cart.Pages;
 
 public class DeleteProduct : PageModel
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly IDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
     public DeleteProduct(UserManager<AppUser> userManager, IDbContext context)
     {
@@ -24,10 +22,7 @@ public class DeleteProduct : PageModel
         var containedProduct = products.Find(p => p.ProductId == id && p.ShopName == shopName)!;
 
         containedProduct.Count--;
-        if (containedProduct.Count == 0)
-        {
-            products.Remove(containedProduct);
-        }
+        if (containedProduct.Count == 0) products.Remove(containedProduct);
 
         await _context.SaveChangesAsync();
     }

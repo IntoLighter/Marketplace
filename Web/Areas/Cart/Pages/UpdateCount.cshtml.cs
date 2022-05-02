@@ -7,8 +7,8 @@ namespace Web.Areas.Cart.Pages;
 
 public class UpdateCount : PageModel
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly IDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
     public UpdateCount(UserManager<AppUser> userManager, IDbContext context)
     {

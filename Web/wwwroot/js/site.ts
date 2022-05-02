@@ -44,7 +44,7 @@ $('.add-to-cart').on('click', function () {
                 widget.find('.dd-selected-text').text(),
                 widget.find('.Image').attr('src') as string,
                 widget.find('.Weight').text() as unknown as number)
-            
+
             addProduct(product)
             break;
         case "dish":
@@ -155,12 +155,12 @@ $('.Count').on('input', function () {
     const shopName = widget.find('.Shop').val() as string
     const countWidget = widget.find('.Count')
     const count = countWidget.val() as number
-    
+
     if (count < 0) {
         countWidget.val(0)
         return
     }
-    
+
     switch (widget.data('item-type') as string) {
         case "product":
             const product = new CartProduct(
@@ -171,7 +171,7 @@ $('.Count').on('input', function () {
                 widget.find('.Image').attr('src') as string,
                 widget.find('.Weight').text() as unknown as number)
             product.count = count
-            
+
             updateCount(product)
             break;
         case "dish":
@@ -188,7 +188,7 @@ $('.Count').on('input', function () {
         const id = product.id
         const shopName = product.shopName
         const pk = {id: id, shopName: shopName}
-        
+
         if (isAuthenticated()) {
             $.post('Areas/Cart/UpdateCount', {id, shopName},
                 () => console.log(`Sent ${JSON.stringify(pk)} to server`))
@@ -213,11 +213,11 @@ $('.Count').on('input', function () {
                     return
                 }
                 cursor.continue()
-                
+
                 objectStore.put(product).onsuccess = () => console.log(`Added product ${pk} to db`)
             }
         }
-        
+
         // @ts-ignore
         transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`)
     }

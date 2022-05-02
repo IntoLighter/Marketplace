@@ -7,8 +7,8 @@ namespace Web.Areas.Cart.Pages;
 
 public class DeleteCompletely : PageModel
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly IDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
     public DeleteCompletely(UserManager<AppUser> userManager, IDbContext context)
     {
