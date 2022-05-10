@@ -1,6 +1,12 @@
 export class CartProduct {
+    id;
+    name;
+    imageUri;
+    weight;
+    price;
+    shopName;
+    count = 1;
     constructor(id, name, price, shopName, imageUri, weight) {
-        this.count = 1;
         this.id = id;
         this.name = name;
         this.price = price;
@@ -9,192 +15,157 @@ export class CartProduct {
         this.weight = weight;
     }
 }
-
 const openRequest = window.indexedDB.open('marketplace', 1);
 let db;
 openRequest.onsuccess = () => {
-    console.log('Db opened successfully');
     db = openRequest.result;
 };
-openRequest.onerror = () => console.log('Db failed to open');
-openRequest.onupgradeneeded = e => {
-    // @ts-ignore
-    db = e.target.result;
-    db.createObjectStore('cart', {keyPath: ['id', 'shopName']});
-    console.log('Db set up');
+openRequest.onupgradeneeded = () => {
+    db = openRequest.result;
+    db.createObjectStore('cart', { keyPath: ['id', 'shopName'] });
 };
-$('.add-to-cart').on('click', function () {
+$('.add-to-cart').on('click', async function () {
     const widget = $(this).parents('.Item');
+    const shopName = widget.find('.dd-selected-value').val();
+    const countWidget = $(this).parent().find('.Count');
+    let newCount = countWidget.val();
+    newCount++;
+    countWidget.val(newCount);
+    activateDeleteButton(widget);
     switch (widget.data('item-type')) {
         case "product":
-            const product = new CartProduct(widget.data('item-id'), widget.find('.Name').text(), widget.find('.Price').text(), widget.find('.dd-selected-text').text(), widget.find('.Image').attr('src'), widget.find('.Weight').text());
-            addProduct(product);
+            await addProduct(constructProduct(widget));
             break;
         case "dish":
-            $.each(widget.find('.dish').children('.col'), (_, val) => {
-                addProduct($(val).data('info'));
+            $.each(widget.find('.product'), async function () {
+                await addProduct(constructConstituentProduct($(this), 1, shopName));
             });
             break;
     }
-    const count = $(this).parent().find('.Count');
-    let newNumber = count.val();
-    newNumber++;
-    count.val(newNumber);
-    widget.parent().find('.delete-from-cart').removeAttr('disabled');
-
-    function addProduct(product) {
-        const pk = {id: product.id, shopName: product.shopName};
-        if (isAuthenticated()) {
+    async function addProduct(product) {
+        const pk = [product.id, product.shopName];
+        if (await isAuthenticated()) {
             $.post('Areas/Cart/AddProduct', product, () => {
                 console.log(`Sent ${JSON.stringify(pk)}  to server`);
             }).fail(() => console.log(`Failed to send {${JSON.stringify(pk)} to server`));
         }
-        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
-        cursorRequest.onsuccess = e => {
+        const objectStore = getCartStore();
+        objectStore.get(pk).onsuccess = e => {
             // @ts-ignore
-            const cursor = e.target.result;
-            if (cursor) {
-                if (cursor.primaryKey[0] === pk.id && cursor.primaryKey[1] === pk.shopName) {
-                    cursor.value.count++;
-                    cursor.update(cursor.value);
-                    // @ts-ignore
-                    console.log(`Found ${JSON.stringify(pk)} in db and updated`);
-                    return;
-                }
-                cursor.continue();
+            let result = e.target.result;
+            if (result) {
+                result.count++;
             }
-            // @ts-ignore
-            objectStore.put(product);
-            transaction.oncomplete = () => console.log(`Added ${JSON.stringify(pk)} to db`);
+            else {
+                result = product;
+            }
+            objectStore.put(result);
         };
-        // @ts-ignore
-        transaction.onerror = e => console.log(`Transaction to add product failed: ${JSON.stringify(pk)} ${e.target.error}`);
     }
 });
-$('.delete-from-cart').on('click', function () {
+$('.delete-from-cart').on('click', async function () {
     const widget = $(this).parents('.Item');
-    const shopName = widget.find('.dd-selected-text').text();
+    const shopName = widget.find('.dd-selected-value').val();
+    const countWidget = $(this).parent().find('.Count');
+    let newCount = countWidget.val();
+    newCount--;
+    countWidget.val(newCount);
+    if (newCount === 0) {
+        disableDeleteButton(widget);
+    }
     switch (widget.data('item-type')) {
         case "product":
-            deleteProduct(widget.data('item-id'), shopName);
+            await deleteProduct(widget.data('item-id'), shopName);
             break;
         case "dish":
-            $.each(widget.find('.dish').children('.col'), (_, val) => {
-                deleteProduct($(val).data('info').Id, shopName);
+            $.each(widget.find('.product'), async function () {
+                await deleteProduct($(this).data('info').id, shopName);
             });
             break;
     }
-    const count = $(this).parent().find('.Count');
-    let newNumber = count.val();
-    newNumber--;
-    count.val(newNumber);
-    if (newNumber === 0) {
-        $(this).attr('disabled', 'disabled');
-    }
-
-    function deleteProduct(id, shopName) {
-        const pk = {id: id, shopName: shopName};
-        if (isAuthenticated()) {
-            $.post('Areas/Cart/Delete', {id, shopName}, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+    async function deleteProduct(id, shopName) {
+        const pk = [id, shopName];
+        if (await isAuthenticated()) {
+            $.post('Areas/Cart/Delete', { id: id, shopName: shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
                 .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
-        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
-        cursorRequest.onsuccess = e => {
+        const objectStore = getCartStore();
+        objectStore.get(pk).onsuccess = e => {
             // @ts-ignore
-            const cursor = e.target.result;
-            if (cursor) {
-                if (cursor.primaryKey[0] == id && cursor.primaryKey[1] === shopName) {
-                    cursor.value.count--;
-                    if (cursor.value.count === 0) {
-                        objectStore.delete([id, shopName]);
-                        transaction.oncomplete = () => console.log(`Deleted ${JSON.stringify(pk)} in db`);
-                        return;
-                    }
-                    cursor.update(cursor.value);
-                    transaction.oncomplete = () => console.log(`Found ${JSON.stringify(pk)} in db and decremented`);
-                    return;
-                }
-                cursor.continue();
+            let result = e.target.result;
+            const count = result.count = result.count - 1;
+            if (count === 0) {
+                objectStore.delete(pk);
+            }
+            else {
+                objectStore.put(result);
             }
         };
-        // @ts-ignore
-        transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.result}`);
     }
 });
-$('.Count').on('input', function () {
+$('.Count').on('input', async function () {
     const widget = $(this).parents('.Item');
-    const shopName = widget.find('.Shop').val();
+    const shopName = widget.find('.dd-selected-value').val();
     const countWidget = widget.find('.Count');
     const count = countWidget.val();
     if (count < 0) {
         countWidget.val(0);
+        disableDeleteButton(widget);
         return;
     }
     switch (widget.data('item-type')) {
         case "product":
-            const product = new CartProduct(widget.data('item-id'), widget.find('.Name').text(), widget.find('.Price').text(), widget.find('.dd-selected-text').text(), widget.find('.Image').attr('src'), widget.find('.Weight').text());
+            const product = constructProduct(widget);
             product.count = count;
-            updateCount(product);
+            await updateCount(product);
             break;
         case "dish":
-            $.each(widget.find('.dish').children('.col'), (_, val) => {
-                const product = $(val).data('info');
-                product.count = count;
-                updateCount(product);
+            $.each(widget.find('.product'), async function () {
+                await updateCount(constructConstituentProduct($(this), count, shopName));
             });
             break;
     }
-
-    function updateCount(product) {
-        const id = product.id;
-        const shopName = product.shopName;
-        const pk = {id: id, shopName: shopName};
-        if (isAuthenticated()) {
-            $.post('Areas/Cart/UpdateCount', {id, shopName}, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
+    async function updateCount(product) {
+        const pk = [product.id, product.shopName];
+        if (await isAuthenticated()) {
+            $.post('Areas/Cart/UpdateCount', product, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
                 .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
         }
-        const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
-        cursorRequest.onsuccess = e => {
+        const objectStore = getCartStore();
+        objectStore.get(pk).onsuccess = e => {
             // @ts-ignore
-            const cursor = e.target.result;
-            if (cursor) {
-                if (cursor.primaryKey.id == id && cursor.primaryKey.shopName === shopName) {
-                    cursor.value.count = count;
-                    if (cursor.value.count === 0) {
-                        objectStore.delete([id, shopName]);
-                        widget.find('.Count').attr('hidden', 'hidden');
-                        widget.find('.delete-from-cart').attr('hidden', 'hidden');
-                        console.log(`Found ${JSON.stringify(pk)} in db and deleted`);
-                    }
-                    cursor.update(cursor.value);
-                    return;
-                }
-                cursor.continue();
-                objectStore.put(product).onsuccess = () => console.log(`Added product ${pk} to db`);
+            let result = e.target.result;
+            if (!result) {
+                result = product;
+            }
+            if (count === 0) {
+                objectStore.delete([product.id, product.shopName]);
+                disableDeleteButton(widget);
+            }
+            else {
+                objectStore.put(result);
             }
         };
-        // @ts-ignore
-        transaction.onerror = e => console.log(`Transaction to delete product ${JSON.stringify(pk)} failed: ${e.target.error}`);
     }
 });
 const ddData = [
     {
         text: 'Аллея',
-        value: 'Alley',
+        value: 'alley',
         selected: false,
-        imageSrc: '../img/shops/Аллея.png'
+        imageSrc: '../img/shops/alley.png'
     },
     {
         text: 'Fixprice',
-        value: 'FixPrice',
+        value: 'fixPrice',
         selected: false,
-        imageSrc: '../img/shops/Fixprice.png'
+        imageSrc: '../img/shops/fixPrice.png'
     },
     {
         text: 'Лента',
-        value: 'Lenta',
+        value: 'lenta',
         selected: true,
-        imageSrc: '../img/shops/Лента.png'
+        imageSrc: '../img/shops/lenta.png'
     }
 ];
 // @ts-ignore
@@ -203,27 +174,35 @@ $('.Shop').ddslick({
     imagePosition: 'left',
     onSelected: (selected) => {
         //@ts-ignore
-        const select = $(selected.selectedItem).parents('.Item');
-        const prices = select.data('prices');
-        if (!prices)
-            return;
+        const parent = $(selected.selectedItem).parents('.Item');
+        const prices = parent.data('prices');
+        parent.find('.Count').val(0);
         // @ts-ignore
-        select.find('.Price').text(prices[selected.selectedData.value]);
+        parent.find('.Price').text(prices[selected.selectedData.value]);
     }
 });
-
-function getIndexedDbTriplet() {
-    const transaction = db.transaction('cart', 'readwrite');
-    const objectStore = transaction.objectStore('cart');
-    const cursorRequest = objectStore.openCursor();
-    return {transaction, objectStore, cursorRequest};
+function constructConstituentProduct(productWidget, count, shopName) {
+    const product = productWidget.data('info');
+    product.price = productWidget.data('prices')[shopName];
+    product.shopName = shopName;
+    product.count = count;
+    return product;
 }
-
-export function isAuthenticated() {
-    $.get(`/Identity/Account/IsAuthenticated`, {}, (resp) => {
+function constructProduct(widget) {
+    return new CartProduct(widget.data('item-id'), widget.find('.Name').text(), widget.find('.Price').text(), widget.find('.dd-selected-value').val(), widget.find('.Image').attr('src'), widget.find('.Weight').text());
+}
+function activateDeleteButton(widget) {
+    widget.parent().find('.delete-from-cart').removeAttr('disabled');
+}
+function disableDeleteButton(widget) {
+    widget.find('.delete-from-cart').attr('disabled', 'disabled');
+}
+function getCartStore() {
+    return db.transaction('cart', 'readwrite').objectStore('cart');
+}
+export async function isAuthenticated() {
+    return $.get(`/Identity/Account/IsAuthenticated`, {}, (resp) => {
         return resp;
     });
-    return false;
 }
-
 //# sourceMappingURL=site.js.map

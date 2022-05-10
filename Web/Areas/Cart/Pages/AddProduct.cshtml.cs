@@ -20,7 +20,7 @@ public class AddProduct : PageModel
     public async Task OnGet(CartProduct product)
     {
         var products = (await _userManager.GetUserAsync(User)).CartProducts;
-        var containedProduct = products.Find(p => p.ProductId == product.ProductId
+        var containedProduct = products.Find(p => p.Id == product.Id
                                                   && p.ShopName == product.ShopName);
         if (containedProduct == null)
             products.Add(product);

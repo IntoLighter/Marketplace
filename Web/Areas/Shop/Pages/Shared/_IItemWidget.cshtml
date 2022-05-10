@@ -2,9 +2,9 @@
 @using Domain.Marketplace
 @using Newtonsoft.Json
 @model Domain.Marketplace.IItem
-@inject IGetIItemInformation _injector
+@inject IGetIItemInformation _itemBL
 
-<div class="Item" data-prices="@JsonConvert.SerializeObject(_injector.GetPricesForShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
+<div class="Item" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
     <div class="text-center mb-3">
         <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
     </div>
@@ -31,12 +31,12 @@
     </div>
     @if (Model is Dish dish)
     {
-        <div class="dish">
+        <div>
             @{
                 <h6>Состоит из:</h6>
                 foreach (var product in dish.Products.Select(productWrapper => productWrapper.Product))
                 {
-                    <div class="col" data-info="@JsonConvert.SerializeObject(product)">
+                    <div class="col product" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(product))" data-info="@JsonConvert.SerializeObject(product)">
                         <img src="@product.ImageUri" alt="@product.Name">
                         <h4 class="text-muted">@product.Name</h4>
                     </div>

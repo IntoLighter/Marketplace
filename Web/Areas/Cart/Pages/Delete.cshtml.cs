@@ -19,7 +19,7 @@ public class DeleteProduct : PageModel
     public async Task OnPost(int id, string shopName)
     {
         var products = (await _userManager.GetUserAsync(User)).CartProducts;
-        var containedProduct = products.Find(p => p.ProductId == id && p.ShopName == shopName)!;
+        var containedProduct = products.Find(p => p.Id == id && p.ShopName == shopName)!;
 
         containedProduct.Count--;
         if (containedProduct.Count == 0) products.Remove(containedProduct);

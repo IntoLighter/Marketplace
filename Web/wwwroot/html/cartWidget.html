@@ -1,22 +1,24 @@
-<div class="Item col mx-3">
-    <img class="Image">
+<div class="Item col d-flex flex-column">
+    <img class="Image cart-image mb-3">
     <div class="Name mb-2"></div>
-    <h6 class="text-black-50 mb-3">
-        <span class="Weight">@Model.Weight</span>
-        <span> г.</span>
-    </h6>
-    <div class="row justify-content-between mb-3">
-        <h4 class="col">
-            <span class="Price"></span>
-            <span> руб.</span>
-        </h4>
-        <img class="Shop col">
-    </div>
-    <div class="row justify-content-between">
-        <h6 class="col">
-            <span class="Count"></span>
-            <span> штук</span>
+    <div class="flex-grow-1">
+        <h6 class="text-black-50 mb-3">
+            <span class="Weight">@Model.Weight</span>
+            <span> г.</span>
         </h6>
-        <button class="delete-from-cart-completely col btn btn-danger">удалить</button>
+        <div class="row justify-content-between mb-3">
+            <h4 class="col">
+                <span class="Price"></span>
+                <span> руб.</span>
+            </h4>
+            <img class="Shop col">
+        </div>
+        <div class="row justify-content-between">
+            <h6 class="col">
+                <span class="Count"></span>
+                <span> штук</span>
+            </h6>
+            <button class="delete-from-cart-completely col btn btn-danger">удалить</button>
+        </div>
     </div>
 </div>

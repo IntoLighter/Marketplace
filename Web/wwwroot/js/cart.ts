@@ -1,18 +1,18 @@
-import {CartProduct, isAuthenticated} from "./site.js";
+import {CartProduct, isAuthenticated} from "./site.js"
+
+const cartWidget = await $.get('html/cartWidget.html')
 
 function appendCartProductWidget(product: CartProduct, row: JQuery<HTMLDivElement>) {
-    $.get('html/cartWidget.html', function (widget: any) {
-        widget = $(widget)
-        widget.data('id', product.id)
-        widget.find('.Image').attr('src', product.imageUri)
-        widget.find('.Name').text(product.name)
-        widget.find('.Weight').text(product.weight)
-        widget.find('.Price').text(product.price)
-        widget.find('.Shop').attr('src', `img/shops/${product.shopName}.png`)
-        widget.find('.Shop').attr('alt', product.shopName)
-        widget.find('.Count').text(product.count)
-        row.append(widget)
-    })
+    const widget = $(cartWidget)
+    widget.data('id', product.id)
+    widget.find('.Image').attr('src', product.imageUri)
+    widget.find('.Name').text(product.name)
+    widget.find('.Weight').text(product.weight)
+    widget.find('.Price').text(product.price)
+    widget.find('.Shop').attr('src', `img/shops/${product.shopName}.png`)
+    widget.find('.Shop').attr('alt', product.shopName)
+    widget.find('.Count').text(product.count)
+    row.append(widget)
 }
 
 let products: CartProduct[] = []
@@ -22,54 +22,58 @@ let db: IDBDatabase
 
 openRequest.onsuccess = () => {
     db = openRequest.result
-    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
+    const [transaction, objectStore, cursorRequest] = getIndexedDbTriplet()
 
     cursorRequest.onsuccess = e => {
         // @ts-ignore
         const cursor = e.target.result
 
-        function getRow(): JQuery<HTMLDivElement> {
-            return $('<div>', {
-                'class': 'row-cols-4 row',
-            });
-        }
-
+        // @ts-ignore
         objectStore.count().onsuccess = async e => {
             // @ts-ignore
             if (e.target.result === 0) {
                 console.log(`Db doesn't have cart products, trying to fetch from server`)
-                if (isAuthenticated()) {
-                    await $.get('/Areas/Cart/GetProducts', products, () => {
+                if (await isAuthenticated()) {
+                    $.get('/Areas/Cart/GetProducts', products, () => {
+
+                        const [transaction, objectStore, cursorRequest] = getIndexedDbTriplet()
+
                         if (products.length === 0) {
                             console.log(`Server also doesn't have cart products`)
                             return
                         } else {
-                            $.each(products, (_, product) => {
-                                objectStore.add(product)
+                            $.each(products, function () {
+                                objectStore.put($(this))
                             })
                             console.log(`Added products to db`)
                         }
                     })
                 }
-            } else if (isAuthenticated()) {
-                await $.get('Areas/Cart/GetProducts', products, () => {
+            } else if (await isAuthenticated()) {
+                $.get('Areas/Cart/GetProducts', products, () => {
+
                     if (products.length == 0) {
                         console.log(`Server doesn't have products, uploading to it from db`)
-                        if (cursor) {
-                            $.post('Areas/Cart/AddProduct', cursor.value)
+
+                        const [transaction, objectStore, cursorRequest] = getIndexedDbTriplet()
+                        cursorRequest.onsuccess = e => {
+                            if (cursor) {
+                                $.post('Areas/Cart/AddProduct', cursor.value)
+                            }
+                            cursor.continue()
+                            console.log(`Uploaded products to server`)
                         }
-                        cursor.continue()
                     }
-                    console.log(`Uploaded products to server`)
                 })
             }
 
+            const [transaction, objectStore, cursorRequest] = getIndexedDbTriplet()
             objectStore.getAll().onsuccess = e => {
                 // @ts-ignore
                 products = e.target.result
-                let productsLength = products.length;
+                let productsLength = products.length
 
-                let decrementCount = 0;
+                let decrementCount = 0
                 if (products.length % 4 !== 0) {
                     while (productsLength % 4 !== 0) {
                         productsLength--
@@ -99,19 +103,24 @@ openRequest.onsuccess = () => {
                 $('main').append(div)
             }
         }
+
+    }
+
+    function getRow(): JQuery<HTMLDivElement> {
+        return $('<div>', {
+            'class': 'row row-cols-4',
+        })
     }
 }
 
-$('main').on('click', '.delete-from-cart-completely', function () {
+$('main').on('click', '.delete-from-cart-completely', async function () {
     const parent = $(this).parents('.Item')
     const id = parent.data('id')
     const shopName = parent.find('.Shop').attr('alt')
     const pk = {id: id, shopName: shopName}
     console.log(pk)
-
-    const {transaction, objectStore, cursorRequest} = getIndexedDbTriplet();
-
-    if (isAuthenticated()) {
+    
+    if (await isAuthenticated()) {
         $.post('Areas/Cart/DeleteProductCompletely', {
             id: id,
             shopName: shopName
@@ -119,6 +128,8 @@ $('main').on('click', '.delete-from-cart-completely', function () {
             console.log(`${JSON.stringify(pk)} deleted completely on server`)
         })
     }
+    
+    const [transaction, objectStore, cursorRequest] = getIndexedDbTriplet()
 
     objectStore.delete([id, shopName])
 
@@ -127,9 +138,9 @@ $('main').on('click', '.delete-from-cart-completely', function () {
     window.location.reload()
 })
 
-function getIndexedDbTriplet() {
+function getIndexedDbTriplet() : [IDBTransaction, IDBObjectStore, IDBRequest] {
     const transaction = db.transaction('cart', 'readwrite')
     const objectStore = transaction.objectStore('cart')
     const cursorRequest = objectStore.openCursor()
-    return {transaction, objectStore, cursorRequest};
+    return [transaction, objectStore, cursorRequest]
 }

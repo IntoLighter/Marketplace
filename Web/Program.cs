@@ -1,6 +1,10 @@
+using System.Reflection;
 using Application;
 using Infrastructure;
 using Infrastructure.Authentication;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using NuGet.Protocol;
 using Twilio;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,11 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{
+    ContractResolver = new CamelCasePropertyNamesContractResolver()
+};
 
 builder.Services.Configure<TwilioVerificationCredentials>(options =>
 {

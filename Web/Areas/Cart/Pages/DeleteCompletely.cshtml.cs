@@ -19,7 +19,7 @@ public class DeleteCompletely : PageModel
     public async Task OnPost(int id, string shopName)
     {
         var products = (await _userManager.GetUserAsync(User)).CartProducts;
-        products.Remove(products.Find(p => p.ProductId == id && p.ShopName == shopName)!);
+        products.Remove(products.Find(p => p.Id == id && p.ShopName == shopName)!);
         await _context.SaveChangesAsync();
     }
 }

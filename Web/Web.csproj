@@ -8,39 +8,39 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" Update="app.db"/>
+        <None CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" Update="app.db" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4"/>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3"/>
-        <PackageReference Include="Twilio" Version="5.74.0"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+        <PackageReference Include="Twilio" Version="5.74.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Application\Application.csproj"/>
-        <ProjectReference Include="..\Domain\Domain.csproj"/>
-        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
+        <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <TypeScriptCompile Include="wwwroot\js\cart.ts"/>
-        <TypeScriptCompile Include="wwwroot\js\site.ts"/>
+        <TypeScriptCompile Include="wwwroot\js\cart.ts" />
+        <TypeScriptCompile Include="wwwroot\js\site.ts" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="wwwroot\img\shops"/>
+        <Folder Include="wwwroot\img\shops" />
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="Areas\Shop\Pages\Shared\_IItemWidget.cshtml"/>
+        <AdditionalFiles Include="Areas\Shop\Pages\Shared\_IItemWidget.cshtml" />
     </ItemGroup>
 
 </Project>
