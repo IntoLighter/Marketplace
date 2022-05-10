@@ -1,3 +1,5 @@
+import {type} from "jquery";
+
 export class CartProduct {
     readonly id: number
     readonly name: string
@@ -34,10 +36,11 @@ $('.add-to-cart').on('click', async function () {
     const shopName = widget.find('.dd-selected-value').val() as string
 
     const countWidget = $(this).parent().find('.Count')
-    let newCount = countWidget.val() as number
-    newCount++
+    let newCount = Number(countWidget.val()) + 1
     countWidget.val(newCount)
-    activateDeleteButton(widget)
+    if (newCount - 1 === 0) {
+        activateDeleteButton(widget)
+    }
 
     switch (widget.data('item-type')) {
         case "product":
@@ -80,8 +83,7 @@ $('.delete-from-cart').on('click', async function () {
     const shopName = widget.find('.dd-selected-value').val() as string
 
     const countWidget = $(this).parent().find('.Count')
-    let newCount = countWidget.val() as number
-    newCount--
+    let newCount = Number(countWidget.val()) - 1
     countWidget.val(newCount)
     if (newCount === 0) {
         disableDeleteButton(widget)
@@ -122,12 +124,12 @@ $('.delete-from-cart').on('click', async function () {
     }
 })
 
-$('.Count').on('input', async function () {
+$('.Count').on('change', async function () {
     const widget = $(this).parents('.Item')
     const shopName = widget.find('.dd-selected-value').val() as string
 
     const countWidget = widget.find('.Count')
-    const count = countWidget.val() as number
+    const count = Number(countWidget.val())
     if (count < 0) {
         countWidget.val(0)
         disableDeleteButton(widget)
@@ -158,18 +160,12 @@ $('.Count').on('input', async function () {
 
         const objectStore = getCartStore()
 
-        objectStore.get(pk).onsuccess = e => {
-            // @ts-ignore
-            let result = e.target.result as CartProduct
-            if (!result) {
-                result = product
-            }
-
+        objectStore.get(pk).onsuccess = () => {
             if (count === 0) {
                 objectStore.delete([product.id, product.shopName])
                 disableDeleteButton(widget)
             } else {
-                objectStore.put(result)
+                objectStore.put(product)
             }
         }
     }
