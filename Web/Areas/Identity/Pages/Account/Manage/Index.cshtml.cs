@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Infrastructure.Identity;
+using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;

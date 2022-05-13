@@ -1,5 +1,6 @@
 @using Application
 @using Domain.Marketplace
+@using Microsoft.AspNetCore.Server.Kestrel.Core
 @using Newtonsoft.Json
 @model Domain.Marketplace.IItem
 @inject IGetIItemInformation _itemBL
@@ -31,9 +32,9 @@
     </div>
     @if (Model is Dish dish)
     {
-        <div>
+        <div class="mt-5">
             @{
-                <h6>Состоит из:</h6>
+                <h3 class="text-center">Состав</h3>
                 foreach (var product in dish.Products.Select(productWrapper => productWrapper.Product))
                 {
                     <div class="col product" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(product))" data-info="@JsonConvert.SerializeObject(product)">

@@ -1,4 +1,4 @@
-using Infrastructure.Identity;
+using Domain;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

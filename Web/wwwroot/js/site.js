@@ -16,6 +16,7 @@ export class CartProduct {
     }
 }
 const openRequest = window.indexedDB.open('marketplace', 1);
+const verificationToken = $('input:hidden[name="__RequestVerificationToken"]').val();
 let db;
 openRequest.onsuccess = () => {
     db = openRequest.result;
@@ -24,6 +25,37 @@ openRequest.onupgradeneeded = () => {
     db = openRequest.result;
     db.createObjectStore('cart', { keyPath: ['id', 'shopName'] });
 };
+export function ajaxPost(data, pk) {
+    $.ajax({
+        url: `/Areas/Cart/Product/Add`,
+        method: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        headers: {
+            RequestVerificationToken: verificationToken
+        }
+    });
+}
+export function ajaxGet() {
+    return $.ajax({
+        url: `/Areas/Cart/Product/Read`,
+        method: 'get',
+        headers: {
+            RequestVerificationToken: verificationToken
+        },
+        success: (resp) => resp,
+        error: (xhr) => console.log(`Failed to read from server: ${xhr.responseText}`)
+    });
+}
+export function ajaxDelete(action, pk) {
+    $.ajax({
+        url: `/Areas/Cart/Product/${action}?id=${pk[0]}&shopName=${pk[1]}`,
+        method: 'delete',
+        headers: {
+            RequestVerificationToken: verificationToken
+        }
+    });
+}
 $('.add-to-cart').on('click', async function () {
     const widget = $(this).parents('.Item');
     const shopName = widget.find('.dd-selected-value').val();
@@ -35,23 +67,18 @@ $('.add-to-cart').on('click', async function () {
     }
     switch (widget.data('item-type')) {
         case "product":
-            await addProduct(constructProduct(widget));
+            addProduct(constructProduct(widget));
             break;
         case "dish":
             $.each(widget.find('.product'), async function () {
-                await addProduct(constructConstituentProduct($(this), 1, shopName));
+                addProduct(constructConstituentProduct($(this), 1, shopName));
             });
             break;
     }
-    async function addProduct(product) {
+    function addProduct(product) {
         const pk = [product.id, product.shopName];
-        if (await isAuthenticated()) {
-            $.post('Areas/Cart/AddProduct', product, () => {
-                console.log(`Sent ${JSON.stringify(pk)}  to server`);
-            }).fail(() => console.log(`Failed to send {${JSON.stringify(pk)} to server`));
-        }
         const objectStore = getCartStore();
-        objectStore.get(pk).onsuccess = e => {
+        objectStore.get(pk).onsuccess = async (e) => {
             // @ts-ignore
             let result = e.target.result;
             if (result) {
@@ -61,6 +88,9 @@ $('.add-to-cart').on('click', async function () {
                 result = product;
             }
             objectStore.put(result);
+            if (await isAuthenticated()) {
+                ajaxPost(result, pk);
+            }
         };
     }
 });
@@ -75,22 +105,18 @@ $('.delete-from-cart').on('click', async function () {
     }
     switch (widget.data('item-type')) {
         case "product":
-            await deleteProduct(widget.data('item-id'), shopName);
+            deleteProduct(widget.data('item-id'), shopName);
             break;
         case "dish":
             $.each(widget.find('.product'), async function () {
-                await deleteProduct($(this).data('info').id, shopName);
+                deleteProduct($(this).data('info').id, shopName);
             });
             break;
     }
-    async function deleteProduct(id, shopName) {
+    function deleteProduct(id, shopName) {
         const pk = [id, shopName];
-        if (await isAuthenticated()) {
-            $.post('Areas/Cart/Delete', { id: id, shopName: shopName }, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
-                .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
-        }
         const objectStore = getCartStore();
-        objectStore.get(pk).onsuccess = e => {
+        objectStore.get(pk).onsuccess = async (e) => {
             // @ts-ignore
             let result = e.target.result;
             const count = result.count = result.count - 1;
@@ -99,6 +125,9 @@ $('.delete-from-cart').on('click', async function () {
             }
             else {
                 objectStore.put(result);
+            }
+            if (await isAuthenticated()) {
+                ajaxDelete('Delete', pk);
             }
         };
     }
@@ -117,28 +146,27 @@ $('.Count').on('change', async function () {
         case "product":
             const product = constructProduct(widget);
             product.count = count;
-            await updateCount(product);
+            updateCount(product);
             break;
         case "dish":
             $.each(widget.find('.product'), async function () {
-                await updateCount(constructConstituentProduct($(this), count, shopName));
+                updateCount(constructConstituentProduct($(this), count, shopName));
             });
             break;
     }
-    async function updateCount(product) {
+    function updateCount(product) {
         const pk = [product.id, product.shopName];
-        if (await isAuthenticated()) {
-            $.post('Areas/Cart/UpdateCount', product, () => console.log(`Sent ${JSON.stringify(pk)} to server`))
-                .fail(() => console.log(`Failed to send ${JSON.stringify(pk)} to server`));
-        }
         const objectStore = getCartStore();
-        objectStore.get(pk).onsuccess = () => {
+        objectStore.get(pk).onsuccess = async () => {
             if (count === 0) {
                 objectStore.delete([product.id, product.shopName]);
                 disableDeleteButton(widget);
             }
             else {
                 objectStore.put(product);
+            }
+            if (await isAuthenticated()) {
+                ajaxPost(product, pk);
             }
         };
     }

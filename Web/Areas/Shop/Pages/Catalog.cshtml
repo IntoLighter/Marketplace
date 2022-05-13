@@ -30,6 +30,7 @@
             </div>
         </div>
         <div class="col-md-10">
+            @Html.AntiForgeryToken()
             @foreach (var item in Model.Items)
             {
                 <partial name="_IItemWidget" model="item"/>

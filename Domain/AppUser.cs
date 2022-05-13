@@ -1,7 +1,7 @@
 using Domain.Cart;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure.Identity;
+namespace Domain;
 
 public class AppUser : IdentityUser
 {

@@ -14,6 +14,9 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 JsonConvert.DefaultSettings = () => new JsonSerializerSettings
 {
@@ -48,7 +51,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();

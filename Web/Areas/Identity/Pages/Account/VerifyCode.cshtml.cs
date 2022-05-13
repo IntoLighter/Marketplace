@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Domain;
 using Infrastructure.Authentication;
-using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
