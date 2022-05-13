@@ -21,33 +21,28 @@ openRequest.onsuccess = () => {
     objectStore.count().onsuccess = async (e) => {
         // @ts-ignore
         if (e.target.result === 0) {
-            console.log(`Db doesn't have cart products, trying to fetch from server`);
             if (await isAuthenticated()) {
                 products = await ajaxGet();
                 const objectStore = getCartStore();
                 if (products.length === 0) {
-                    console.log(`Server also doesn't have cart products`);
                     return;
                 }
                 else {
                     $.each(products, function () {
                         objectStore.put(this);
                     });
-                    console.log(`Added products to db`);
                 }
             }
         }
         else if (await isAuthenticated()) {
             products = await ajaxGet();
             if (products.length == 0) {
-                console.log(`Server doesn't have products, uploading to it from db`);
                 const objectStore = getCartStore();
                 objectStore.openCursor().onsuccess = e => {
                     // @ts-ignore
                     const cursor = e.target.result;
                     if (cursor) {
                         ajaxPost(cursor.value, cursor.primaryKey);
-                        console.log(`Uploaded ${cursor.value} to server`);
                         cursor.continue();
                     }
                 };
