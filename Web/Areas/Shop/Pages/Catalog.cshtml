@@ -8,26 +8,38 @@
     <div class="row">
         <div class="col-md-2">
             <div>Категории</div>
-            <div class="list-group">
-                <form method="post">
-                    <button type="submit" asp-page-handler="Products">Продукты</button>
-                </form>
-                <form method="post">
-                    <button type="submit" asp-page-handler="Soups">Супы</button>
-                </form>
-                <form method="post">
-                    <button type="submit" asp-page-handler="MeatDishes">Мясные блюда</button>
-                </form>
-                <form method="post">
-                    <button type="submit" asp-page-handler="FishDishes">Рыбные блюда</button>
-                </form>
-                <form method="post">
-                    <button type="submit" asp-page-handler="Salads">Салаты</button>
-                </form>
-                <form method="post">
-                    <button type="submit" asp-page-handler="Desserts">Десерты</button>
-                </form>
-            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="Products">Продукты</button>
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="Soups">Супы</button>
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="MeatDishes">Мясные блюда</button>
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="FishDishes">Рыбные блюда</button>
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="Salads">Салаты</button>
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <form method="post">
+                        <button class="btn btn-link" type="submit" asp-page-handler="Desserts">Десерты</button>
+                    </form>
+                </li>
+            </ul>
         </div>
         <div class="col-md-10">
             @Html.AntiForgeryToken()
