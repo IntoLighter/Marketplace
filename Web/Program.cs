@@ -15,6 +15,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
+builder.Services.AddWebOptimizer();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -42,6 +43,7 @@ else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
+    app.UseWebOptimizer();
 }
 
 app.UseHttpsRedirection();
