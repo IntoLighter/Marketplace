@@ -25,6 +25,35 @@ public class CatalogModel : PageModel
         Items = Dishes.Cast<IItem>().ToList();
         Items.AddRange(Products.Cast<IItem>().ToList());
     }
+    public void OnGetProducts()
+    {
+        Items = Products.Cast<IItem>().ToList();
+    }
+
+    public void OnGetSoups()
+    {
+        Items = Dishes.Where(_ => _.Category == DishCategory.Soup).Cast<IItem>().ToList();
+    }
+
+    public void OnGetMeatDishes()
+    {
+        Items = Dishes.Where(_ => _.Category == DishCategory.Meat).Cast<IItem>().ToList();
+    }
+
+    public void OnGetFishDishes()
+    {
+        Items = Dishes.Where(_ => _.Category == DishCategory.Fish).Cast<IItem>().ToList();
+    }
+
+    public void OnGetSalads()
+    {
+        Items = Dishes.Where(_ => _.Category == DishCategory.Salad).Cast<IItem>().ToList();
+    }
+
+    public void OnGetDesserts()
+    {
+        Items = Dishes.Where(_ => _.Category == DishCategory.Dessert).Cast<IItem>().ToList();
+    }
 
     public void OnPost(string name)
     {
