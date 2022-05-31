@@ -5,16 +5,44 @@
   max-width: none;
   float: none;
 }
+.product-text {
+  font-size: 1rem;
+}
 .cart-image {
-  width: 261px;
-  height: 261px;
+  width: 200px;
+  height: 200px;
+}
+.product-image {
+  width: 150px;
+  height: 150px;
+}
+.link-item {
+  text-align: center;
+}
+@media (min-width: 576px) {
+  .link-item {
+    text-align: left;
+  }
+}
+.count-shop {
+  border: none;
+  margin: 0 1rem 0 1rem;
+  flex-grow: 0.5;
+}
+@media (min-width: 576px) {
+  .count-shop {
+    flex-grow: 0.2;
+    margin: 0 1.5rem 0 1.5rem;
+  }
+}
+.count-shop:focus-visible {
+  border: 0;
+  box-shadow: inset 0 0 0 0.4rem rgba(228, 231, 235, 0.7);
+  outline: none;
+  border-radius: 0.4rem;
 }
 .Item {
   margin-bottom: 2rem;
-}
-.Item .Count {
-  border: none;
-  width: 5rem;
 }
 .Item .Item-data > * {
   padding-left: 0;
@@ -22,13 +50,19 @@
 }
 .Item .Image,
 .Item .product img {
-  width: 100%;
   object-fit: scale-down;
+}
+.Item .dish-image {
+  width: 100%;
+  height: 250px;
 }
 .dd-selected-image,
 .Shop {
   width: 160px;
   height: 45px;
+}
+.delete-from-cart-completely {
+  width: 160px;
 }
 .form-floating-group-prepend input {
   border-bottom-left-radius: 0;

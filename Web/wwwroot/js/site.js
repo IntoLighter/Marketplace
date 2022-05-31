@@ -176,19 +176,19 @@ const ddData = [
         text: 'Аллея',
         value: 'alley',
         selected: false,
-        imageSrc: '../img/shops/alley.png'
+        imageSrc: '/img/shops/alley.png'
     },
     {
         text: 'Fixprice',
         value: 'fixPrice',
         selected: false,
-        imageSrc: '../img/shops/fixPrice.png'
+        imageSrc: '/img/shops/fixPrice.png'
     },
     {
         text: 'Лента',
         value: 'lenta',
         selected: true,
-        imageSrc: '../img/shops/lenta.png'
+        imageSrc: '/img/shops/lenta.png'
     }
 ];
 // @ts-ignore

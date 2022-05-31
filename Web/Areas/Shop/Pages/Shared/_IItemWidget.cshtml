@@ -7,10 +7,10 @@
 
 <div class="Item" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(Model))" data-item-type="@(Model is Dish ? "dish" : "product")" data-item-id="@Model.Id">
     <div class="text-center mb-3">
-        <img src="@Model.ImageUri" alt="@Model.Name" class="Image">
+        <img src="@Model.ImageUri" alt="@Model.Name" class="Image dish-image">
     </div>
-    <div class="row Item-data mb-3">
-        <div class="col">
+    <div class="d-flex flex-column flex-sm-row text-center text-sm-start Item-data mb-4">
+        <div class="mb-3 mb-sm-0">
             <h5 class="lead Name">@Model.Name</h5>
             <h6 class="text-black-50 mb-2">
                 <span class="Weight">@Model.Weight</span>
@@ -21,27 +21,31 @@
                 <span> руб.</span>
             </h4>
         </div>
-        <div class="col d-flex justify-content-end">
+        <div class="d-flex flex-grow-1 justify-content-sm-end justify-content-center">
             <div class="Shop"></div>
         </div>
     </div>
-    <div class="row row-cols-auto">
-        <button class="btn btn-primary delete-from-cart col-5" type="button" disabled>-</button>
-        <input type="number" class="Count col mx-auto text-center" value="0">
-        <button class="btn btn-primary add-to-cart col-5" type="button">+</button>
+    <div class="row">
+        <button class="btn btn-primary delete-from-cart col" type="button" disabled>-</button>
+        <input type="number" class="Count count-shop col text-center" value="0">
+        <button class="btn btn-primary add-to-cart col" type="button">+</button>
     </div>
     @if (Model is Dish dish)
     {
-        <div class="mt-5">
+        <div class="mt-5 mb-5">
             @{
                 <h3 class="text-center">Состав</h3>
-                foreach (var product in dish.Products.Select(productWrapper => productWrapper.Product))
-                {
-                    <div class="col product" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(product))" data-info="@JsonConvert.SerializeObject(product)">
-                        <img src="@product.ImageUri" alt="@product.Name">
-                        <h4 class="text-muted">@product.Name</h4>
-                    </div>
-                }
+                <div class="row">
+                    @foreach (var product in dish.Products.Select(productWrapper => productWrapper.Product))
+                    {
+                        <div class="col-md-3 col-6 product" data-prices="@JsonConvert.SerializeObject(_itemBL.GetPricesByShop(product))" data-info="@JsonConvert.SerializeObject(product)">
+                            <div class="text-center">
+                                <img class="product-image" src="@product.ImageUri" alt="@product.Name">
+                            </div>
+                            <h4 class="text-muted text-center product-text">@product.Name</h4>
+                        </div>
+                    }
+                </div>
             }
         </div>
     }

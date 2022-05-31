@@ -1,47 +1,46 @@
 ﻿@page "{handler?}"
-@model Web.Areas.Shop.Pages.CatalogModel
+@model CatalogModel
 @{
     ViewData["Title"] = "Список блюд";
 }
 
-<div class="container content">
+<div class="container">
     <div class="row">
-        <div class="col-md-2">
-            <div>Категории</div>
+        <div class="col-lg-2 mb-4 mb-lg-0">
             <ul class="list-group">
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="Products">Продукты</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="Products">Продукты</button>
                     </form>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="Soups">Супы</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="Soups">Супы</button>
                     </form>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="MeatDishes">Мясные блюда</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="MeatDishes">Мясные блюда</button>
                     </form>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="FishDishes">Рыбные блюда</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="FishDishes">Рыбные блюда</button>
                     </form>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="Salads">Салаты</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="Salads">Салаты</button>
                     </form>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item link-item">
                     <form method="post">
-                        <button class="btn btn-link" type="submit" asp-page-handler="Desserts">Десерты</button>
+                        <button class="btn btn-link link-item" type="submit" asp-page-handler="Desserts">Десерты</button>
                     </form>
                 </li>
             </ul>
         </div>
-        <div class="col-md-10">
+        <div class="col-lg-10">
             @Html.AntiForgeryToken()
             @foreach (var item in Model.Items)
             {

@@ -1,6 +1,7 @@
 import { ajaxDelete, ajaxGet, ajaxPost, isAuthenticated } from "./site.js";
 const cartWidget = await $.get('html/cartWidget.html');
-function appendCartProductWidget(product, row) {
+const row = $('<div>', { 'class': 'row' });
+function appendCartProductWidget(product) {
     const widget = $(cartWidget);
     widget.data('id', product.id);
     widget.find('.Image').attr('src', product.imageUri);
@@ -52,36 +53,12 @@ openRequest.onsuccess = () => {
         objectStore.getAll().onsuccess = e => {
             // @ts-ignore
             products = e.target.result;
-            let productsLength = products.length;
-            let decrementCount = 0;
-            while (productsLength % 4 !== 0) {
-                productsLength--;
-                decrementCount++;
-            }
-            const div = $('<div>');
-            for (let i = 0; i < productsLength; i += 4) {
-                const row = getRow();
-                appendCartProductWidget(products[i], row);
-                appendCartProductWidget(products[i + 1], row);
-                appendCartProductWidget(products[i + 2], row);
-                appendCartProductWidget(products[i + 3], row);
-                div.append(row);
-            }
-            if (decrementCount !== 0) {
-                const row = getRow();
-                for (let i = 0; i < decrementCount; i++) {
-                    appendCartProductWidget(products[productsLength + i], row);
-                }
-                div.append(row);
-            }
-            $('main').append(div);
+            $.each(products, function () {
+                appendCartProductWidget(this);
+            });
+            $('main').append(row);
         };
     };
-    function getRow() {
-        return $('<div>', {
-            'class': 'row row-cols-4',
-        });
-    }
 };
 $('main').on('click', '.delete-from-cart-completely', async function () {
     const parent = $(this).parents('.Item');
