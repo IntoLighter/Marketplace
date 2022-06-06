@@ -34,21 +34,21 @@ namespace Infrastructure.Migrations
                     {5, Convert.ToInt32(Shop.Lenta), 160},
                     {5, Convert.ToInt32(Shop.FixPrice), 228},
 
-                    {6, Convert.ToInt32(Shop.Alley), 574},
-                    {6, Convert.ToInt32(Shop.Lenta), 601},
-                    {6, Convert.ToInt32(Shop.FixPrice), 784},
+                    {6, Convert.ToInt32(Shop.Alley), 6},
+                    {6, Convert.ToInt32(Shop.Lenta), 5},
+                    {6, Convert.ToInt32(Shop.FixPrice), 4},
 
-                    {7, Convert.ToInt32(Shop.Alley), 245},
-                    {7, Convert.ToInt32(Shop.Lenta), 261},
-                    {7, Convert.ToInt32(Shop.FixPrice), 310},
+                    {7, Convert.ToInt32(Shop.Alley), 25},
+                    {7, Convert.ToInt32(Shop.Lenta), 22},
+                    {7, Convert.ToInt32(Shop.FixPrice), 19},
 
                     {8, Convert.ToInt32(Shop.Alley), 132},
                     {8, Convert.ToInt32(Shop.Lenta), 145},
                     {8, Convert.ToInt32(Shop.FixPrice), 196},
 
-                    {9, Convert.ToInt32(Shop.Alley), 345},
-                    {9, Convert.ToInt32(Shop.Lenta), 429},
-                    {9, Convert.ToInt32(Shop.FixPrice), 224},
+                    {9, Convert.ToInt32(Shop.Alley), 156},
+                    {9, Convert.ToInt32(Shop.Lenta), 140},
+                    {9, Convert.ToInt32(Shop.FixPrice), 124},
 
                     {10, Convert.ToInt32(Shop.Alley), 96},
                     {10, Convert.ToInt32(Shop.Lenta), 71},
@@ -66,13 +66,13 @@ namespace Infrastructure.Migrations
                     {13, Convert.ToInt32(Shop.Lenta), 98},
                     {13, Convert.ToInt32(Shop.FixPrice), 118},
 
-                    {14, Convert.ToInt32(Shop.Alley), 505},
-                    {14, Convert.ToInt32(Shop.Lenta), 446},
-                    {14, Convert.ToInt32(Shop.FixPrice), 658},
+                    {14, Convert.ToInt32(Shop.Alley), 14},
+                    {14, Convert.ToInt32(Shop.Lenta), 12},
+                    {14, Convert.ToInt32(Shop.FixPrice), 11},
 
-                    {15, Convert.ToInt32(Shop.Alley), 157},
-                    {15, Convert.ToInt32(Shop.Lenta), 199},
-                    {15, Convert.ToInt32(Shop.FixPrice), 105},
+                    {15, Convert.ToInt32(Shop.Alley), 220},
+                    {15, Convert.ToInt32(Shop.Lenta), 200},
+                    {15, Convert.ToInt32(Shop.FixPrice), 190},
 
                     {16, Convert.ToInt32(Shop.Alley), 691},
                     {16, Convert.ToInt32(Shop.Lenta), 569},
@@ -90,33 +90,33 @@ namespace Infrastructure.Migrations
                     {19, Convert.ToInt32(Shop.Lenta), 38},
                     {19, Convert.ToInt32(Shop.FixPrice), 37},
 
-                    {20, Convert.ToInt32(Shop.Alley), 692},
-                    {20, Convert.ToInt32(Shop.Lenta), 792},
-                    {20, Convert.ToInt32(Shop.FixPrice), 544},
+                    {20, Convert.ToInt32(Shop.Alley), 156},
+                    {20, Convert.ToInt32(Shop.Lenta), 142},
+                    {20, Convert.ToInt32(Shop.FixPrice), 130},
 
-                    {21, Convert.ToInt32(Shop.Alley), 300},
-                    {21, Convert.ToInt32(Shop.Lenta), 464},
-                    {21, Convert.ToInt32(Shop.FixPrice), 341},
+                    {21, Convert.ToInt32(Shop.Alley), 440},
+                    {21, Convert.ToInt32(Shop.Lenta), 400},
+                    {21, Convert.ToInt32(Shop.FixPrice), 380},
 
                     {22, Convert.ToInt32(Shop.Alley), 50},
                     {22, Convert.ToInt32(Shop.Lenta), 48},
                     {22, Convert.ToInt32(Shop.FixPrice), 61},
 
-                    {23, Convert.ToInt32(Shop.Alley), 143},
-                    {23, Convert.ToInt32(Shop.Lenta), 250},
-                    {23, Convert.ToInt32(Shop.FixPrice), 244},
+                    {23, Convert.ToInt32(Shop.Alley), 66},
+                    {23, Convert.ToInt32(Shop.Lenta), 60},
+                    {23, Convert.ToInt32(Shop.FixPrice), 57},
 
-                    {24, Convert.ToInt32(Shop.Alley), 300},
-                    {24, Convert.ToInt32(Shop.Lenta), 269},
-                    {24, Convert.ToInt32(Shop.FixPrice), 317},
+                    {24, Convert.ToInt32(Shop.Alley), 44},
+                    {24, Convert.ToInt32(Shop.Lenta), 40},
+                    {24, Convert.ToInt32(Shop.FixPrice), 38},
                     //DessertEnd
-                    {25, Convert.ToInt32(Shop.Alley), 153},
-                    {25, Convert.ToInt32(Shop.Lenta), 140},
-                    {25, Convert.ToInt32(Shop.FixPrice), 119},
+                    {25, Convert.ToInt32(Shop.Alley), 420},
+                    {25, Convert.ToInt32(Shop.Lenta), 393},
+                    {25, Convert.ToInt32(Shop.FixPrice), 380},
 
-                    {26, Convert.ToInt32(Shop.Alley), 808},
-                    {26, Convert.ToInt32(Shop.Lenta), 757},
-                    {26, Convert.ToInt32(Shop.FixPrice), 1003},
+                    {26, Convert.ToInt32(Shop.Alley), 93},
+                    {26, Convert.ToInt32(Shop.Lenta), 85},
+                    {26, Convert.ToInt32(Shop.FixPrice), 83},
 
                     {27, Convert.ToInt32(Shop.Alley), 132},
                     {27, Convert.ToInt32(Shop.Lenta), 150},
@@ -130,9 +130,9 @@ namespace Infrastructure.Migrations
                     {29, Convert.ToInt32(Shop.Lenta), 69},
                     {29, Convert.ToInt32(Shop.FixPrice), 56},
 
-                    {30, Convert.ToInt32(Shop.Alley), 332},
-                    {30, Convert.ToInt32(Shop.Lenta), 332},
-                    {30, Convert.ToInt32(Shop.FixPrice), 478},
+                    {30, Convert.ToInt32(Shop.Alley), 10},
+                    {30, Convert.ToInt32(Shop.Lenta), 9},
+                    {30, Convert.ToInt32(Shop.FixPrice), 9},
 
                     {31, Convert.ToInt32(Shop.Alley), 107},
                     {31, Convert.ToInt32(Shop.Lenta), 95},
@@ -142,9 +142,9 @@ namespace Infrastructure.Migrations
                     {32, Convert.ToInt32(Shop.Lenta), 353},
                     {32, Convert.ToInt32(Shop.FixPrice), 230},
 
-                    {33, Convert.ToInt32(Shop.Alley), 387},
-                    {33, Convert.ToInt32(Shop.Lenta), 485},
-                    {33, Convert.ToInt32(Shop.FixPrice), 531},
+                    {33, Convert.ToInt32(Shop.Alley), 187},
+                    {33, Convert.ToInt32(Shop.Lenta), 170},
+                    {33, Convert.ToInt32(Shop.FixPrice), 165},
 
                     {34, Convert.ToInt32(Shop.Alley), 178},
                     {34, Convert.ToInt32(Shop.Lenta), 176},
@@ -170,9 +170,9 @@ namespace Infrastructure.Migrations
                     {39, Convert.ToInt32(Shop.Lenta), 80},
                     {39, Convert.ToInt32(Shop.FixPrice), 42},
 
-                    {40, Convert.ToInt32(Shop.Alley), 577},
-                    {40, Convert.ToInt32(Shop.Lenta), 615},
-                    {40, Convert.ToInt32(Shop.FixPrice), 750},
+                    {40, Convert.ToInt32(Shop.Alley), 242},
+                    {40, Convert.ToInt32(Shop.Lenta), 220},
+                    {40, Convert.ToInt32(Shop.FixPrice), 210},
 
                     {41, Convert.ToInt32(Shop.Alley), 69},
                     {41, Convert.ToInt32(Shop.Lenta), 65},
@@ -186,53 +186,53 @@ namespace Infrastructure.Migrations
                     {43, Convert.ToInt32(Shop.Lenta), 33},
                     {43, Convert.ToInt32(Shop.FixPrice), 20},
 
-                    {44, Convert.ToInt32(Shop.Alley), 997},
-                    {44, Convert.ToInt32(Shop.Lenta), 675},
-                    {44, Convert.ToInt32(Shop.FixPrice), 572},
+                    {44, Convert.ToInt32(Shop.Alley), 169},
+                    {44, Convert.ToInt32(Shop.Lenta), 154},
+                    {44, Convert.ToInt32(Shop.FixPrice), 145},
 
-                    {45, Convert.ToInt32(Shop.Alley), 396},
-                    {45, Convert.ToInt32(Shop.Lenta), 360},
-                    {45, Convert.ToInt32(Shop.FixPrice), 264},
+                    {45, Convert.ToInt32(Shop.Alley), 230},
+                    {45, Convert.ToInt32(Shop.Lenta), 210},
+                    {45, Convert.ToInt32(Shop.FixPrice), 200},
 
-                    {46, Convert.ToInt32(Shop.Alley), 192},
-                    {46, Convert.ToInt32(Shop.Lenta), 233},
-                    {46, Convert.ToInt32(Shop.FixPrice), 337},
+                    {46, Convert.ToInt32(Shop.Alley), 65},
+                    {46, Convert.ToInt32(Shop.Lenta), 60},
+                    {46, Convert.ToInt32(Shop.FixPrice), 63},
 
                     {47, Convert.ToInt32(Shop.Alley), 139},
                     {47, Convert.ToInt32(Shop.Lenta), 100},
                     {47, Convert.ToInt32(Shop.FixPrice), 124},
 
-                    {48, Convert.ToInt32(Shop.Alley), 551},
-                    {48, Convert.ToInt32(Shop.Lenta), 623},
-                    {48, Convert.ToInt32(Shop.FixPrice), 928},
+                    {48, Convert.ToInt32(Shop.Alley), 93},
+                    {48, Convert.ToInt32(Shop.Lenta), 87},
+                    {48, Convert.ToInt32(Shop.FixPrice), 80},
 
                     {49, Convert.ToInt32(Shop.Alley), 47},
                     {49, Convert.ToInt32(Shop.Lenta), 37},
                     {49, Convert.ToInt32(Shop.FixPrice), 29},
 
-                    {50, Convert.ToInt32(Shop.Alley), 545},
-                    {50, Convert.ToInt32(Shop.Lenta), 518},
-                    {50, Convert.ToInt32(Shop.FixPrice), 725},
+                    {50, Convert.ToInt32(Shop.Alley), 70},
+                    {50, Convert.ToInt32(Shop.Lenta), 63},
+                    {50, Convert.ToInt32(Shop.FixPrice), 60},
 
-                    {51, Convert.ToInt32(Shop.Alley), 248},
-                    {51, Convert.ToInt32(Shop.Lenta), 387},
-                    {51, Convert.ToInt32(Shop.FixPrice), 528},
+                    {51, Convert.ToInt32(Shop.Alley), 190},
+                    {51, Convert.ToInt32(Shop.Lenta), 177},
+                    {51, Convert.ToInt32(Shop.FixPrice), 170},
 
                     {52, Convert.ToInt32(Shop.Alley), 91},
                     {52, Convert.ToInt32(Shop.Lenta), 67},
                     {52, Convert.ToInt32(Shop.FixPrice), 46},
 
-                    {53, Convert.ToInt32(Shop.Alley), 433},
-                    {53, Convert.ToInt32(Shop.Lenta), 449},
-                    {53, Convert.ToInt32(Shop.FixPrice), 474},
+                    {53, Convert.ToInt32(Shop.Alley), 115},
+                    {53, Convert.ToInt32(Shop.Lenta), 100},
+                    {53, Convert.ToInt32(Shop.FixPrice), 95},
 
                     {54, Convert.ToInt32(Shop.Alley), 187},
                     {54, Convert.ToInt32(Shop.Lenta), 243},
                     {54, Convert.ToInt32(Shop.FixPrice), 340},
 
-                    {55, Convert.ToInt32(Shop.Alley), 955},
-                    {55, Convert.ToInt32(Shop.Lenta), 670},
-                    {55, Convert.ToInt32(Shop.FixPrice), 722},
+                    {55, Convert.ToInt32(Shop.Alley), 400},
+                    {55, Convert.ToInt32(Shop.Lenta), 385},
+                    {55, Convert.ToInt32(Shop.FixPrice), 378},
 
                     {56, Convert.ToInt32(Shop.Alley), 100},
                     {56, Convert.ToInt32(Shop.Lenta), 119},
@@ -266,17 +266,17 @@ namespace Infrastructure.Migrations
                     {63, Convert.ToInt32(Shop.Lenta), 80},
                     {63, Convert.ToInt32(Shop.FixPrice), 90},
 
-                    {64, Convert.ToInt32(Shop.Alley), 3814},
-                    {64, Convert.ToInt32(Shop.Lenta), 3509},
-                    {64, Convert.ToInt32(Shop.FixPrice), 4813},
+                    {64, Convert.ToInt32(Shop.Alley), 445},
+                    {64, Convert.ToInt32(Shop.Lenta), 400},
+                    {64, Convert.ToInt32(Shop.FixPrice), 390},
 
                     {65, Convert.ToInt32(Shop.Alley), 185},
                     {65, Convert.ToInt32(Shop.Lenta), 150},
                     {65, Convert.ToInt32(Shop.FixPrice), 185},
 
-                    {66, Convert.ToInt32(Shop.Alley), 1454},
-                    {66, Convert.ToInt32(Shop.Lenta), 2089},
-                    {66, Convert.ToInt32(Shop.FixPrice), 2709},
+                    {66, Convert.ToInt32(Shop.Alley), 320},
+                    {66, Convert.ToInt32(Shop.Lenta), 289},
+                    {66, Convert.ToInt32(Shop.FixPrice), 279},
 
                     {67, Convert.ToInt32(Shop.Alley), 147},
                     {67, Convert.ToInt32(Shop.Lenta), 100},
@@ -286,9 +286,9 @@ namespace Infrastructure.Migrations
                     {68, Convert.ToInt32(Shop.Lenta), 117},
                     {68, Convert.ToInt32(Shop.FixPrice), 138},
 
-                    {69, Convert.ToInt32(Shop.Alley), 475},
-                    {69, Convert.ToInt32(Shop.Lenta), 366},
-                    {69, Convert.ToInt32(Shop.FixPrice), 282},
+                    {69, Convert.ToInt32(Shop.Alley), 43},
+                    {69, Convert.ToInt32(Shop.Lenta), 37},
+                    {69, Convert.ToInt32(Shop.FixPrice), 35},
 
                     {70, Convert.ToInt32(Shop.Alley), 123},
                     {70, Convert.ToInt32(Shop.Lenta), 99},
@@ -302,9 +302,9 @@ namespace Infrastructure.Migrations
                     {72, Convert.ToInt32(Shop.Lenta), 49},
                     {72, Convert.ToInt32(Shop.FixPrice), 51},
 
-                    {73, Convert.ToInt32(Shop.Alley), 839},
-                    {73, Convert.ToInt32(Shop.Lenta), 819},
-                    {73, Convert.ToInt32(Shop.FixPrice), 693},
+                    {73, Convert.ToInt32(Shop.Alley), 475},
+                    {73, Convert.ToInt32(Shop.Lenta), 450},
+                    {73, Convert.ToInt32(Shop.FixPrice), 440},
 
                     {74, Convert.ToInt32(Shop.Alley), 85},
                     {74, Convert.ToInt32(Shop.Lenta), 160},
@@ -318,9 +318,9 @@ namespace Infrastructure.Migrations
                     {76, Convert.ToInt32(Shop.Lenta), 26},
                     {76, Convert.ToInt32(Shop.FixPrice), 20},
                     //MeatEnd
-                    {77, Convert.ToInt32(Shop.Alley), 897},
-                    {77, Convert.ToInt32(Shop.Lenta), 1186},
-                    {77, Convert.ToInt32(Shop.FixPrice), 1678},
+                    {77, Convert.ToInt32(Shop.Alley), 300},
+                    {77, Convert.ToInt32(Shop.Lenta), 265},
+                    {77, Convert.ToInt32(Shop.FixPrice), 275},
 
                     {78, Convert.ToInt32(Shop.Alley), 143},
                     {78, Convert.ToInt32(Shop.Lenta), 110},
@@ -342,9 +342,9 @@ namespace Infrastructure.Migrations
                     {82, Convert.ToInt32(Shop.Lenta), 100},
                     {82, Convert.ToInt32(Shop.FixPrice), 141},
 
-                    {83, Convert.ToInt32(Shop.Alley), 1351},
-                    {83, Convert.ToInt32(Shop.Lenta), 1919},
-                    {83, Convert.ToInt32(Shop.FixPrice), 2523},
+                    {83, Convert.ToInt32(Shop.Alley), 1300},
+                    {83, Convert.ToInt32(Shop.Lenta), 1215},
+                    {83, Convert.ToInt32(Shop.FixPrice), 1200},
 
                     {84, Convert.ToInt32(Shop.Alley), 158},
                     {84, Convert.ToInt32(Shop.Lenta), 122},
@@ -370,9 +370,9 @@ namespace Infrastructure.Migrations
                     {89, Convert.ToInt32(Shop.Lenta), 88},
                     {89, Convert.ToInt32(Shop.FixPrice), 105},
 
-                    {90, Convert.ToInt32(Shop.Alley), 201},
-                    {90, Convert.ToInt32(Shop.Lenta), 203},
-                    {90, Convert.ToInt32(Shop.FixPrice), 268},
+                    {90, Convert.ToInt32(Shop.Alley), 115},
+                    {90, Convert.ToInt32(Shop.Lenta), 100},
+                    {90, Convert.ToInt32(Shop.FixPrice), 95},
 
                     {91, Convert.ToInt32(Shop.Alley), 141},
                     {91, Convert.ToInt32(Shop.Lenta), 114},
@@ -414,9 +414,9 @@ namespace Infrastructure.Migrations
                     {100, Convert.ToInt32(Shop.Lenta), 85},
                     {100, Convert.ToInt32(Shop.FixPrice), 60},
 
-                    {101, Convert.ToInt32(Shop.Alley), 455},
-                    {101, Convert.ToInt32(Shop.Lenta), 700},
-                    {101, Convert.ToInt32(Shop.FixPrice), 678},
+                    {101, Convert.ToInt32(Shop.Alley), 100},
+                    {101, Convert.ToInt32(Shop.Lenta), 90},
+                    {101, Convert.ToInt32(Shop.FixPrice), 95},
                     //SoupEnd
                     {102, Convert.ToInt32(Shop.Alley), 627},
                     {102, Convert.ToInt32(Shop.Lenta), 468},
@@ -430,17 +430,17 @@ namespace Infrastructure.Migrations
                     {104, Convert.ToInt32(Shop.Lenta), 420},
                     {104, Convert.ToInt32(Shop.FixPrice), 414},
 
-                    {105, Convert.ToInt32(Shop.Alley), 305},
-                    {105, Convert.ToInt32(Shop.Lenta), 599},
-                    {105, Convert.ToInt32(Shop.FixPrice), 432},
+                    {105, Convert.ToInt32(Shop.Alley), 170},
+                    {105, Convert.ToInt32(Shop.Lenta), 149},
+                    {105, Convert.ToInt32(Shop.FixPrice), 140},
 
-                    {106, Convert.ToInt32(Shop.Alley), 2088},
-                    {106, Convert.ToInt32(Shop.Lenta), 1999},
-                    {106, Convert.ToInt32(Shop.FixPrice), 1619},
+                    {106, Convert.ToInt32(Shop.Alley), 1620},
+                    {106, Convert.ToInt32(Shop.Lenta), 1500},
+                    {106, Convert.ToInt32(Shop.FixPrice), 1499},
 
-                    {107, Convert.ToInt32(Shop.Alley), 711},
-                    {107, Convert.ToInt32(Shop.Lenta), 504},
-                    {107, Convert.ToInt32(Shop.FixPrice), 699},
+                    {107, Convert.ToInt32(Shop.Alley), 150},
+                    {107, Convert.ToInt32(Shop.Lenta), 140},
+                    {107, Convert.ToInt32(Shop.FixPrice), 135},
 
                     {108, Convert.ToInt32(Shop.Alley), 78},
                     {108, Convert.ToInt32(Shop.Lenta), 91},
@@ -466,17 +466,17 @@ namespace Infrastructure.Migrations
                     {113, Convert.ToInt32(Shop.Lenta), 124},
                     {113, Convert.ToInt32(Shop.FixPrice), 130},
 
-                    {114, Convert.ToInt32(Shop.Alley), 166},
-                    {114, Convert.ToInt32(Shop.Lenta), 329},
-                    {114, Convert.ToInt32(Shop.FixPrice), 189},
+                    {114, Convert.ToInt32(Shop.Alley), 73},
+                    {114, Convert.ToInt32(Shop.Lenta), 69},
+                    {114, Convert.ToInt32(Shop.FixPrice), 70},
 
-                    {115, Convert.ToInt32(Shop.Alley), 1011},
-                    {115, Convert.ToInt32(Shop.Lenta), 991},
-                    {115, Convert.ToInt32(Shop.FixPrice), 1246},
+                    {115, Convert.ToInt32(Shop.Alley), 180},
+                    {115, Convert.ToInt32(Shop.Lenta), 185},
+                    {115, Convert.ToInt32(Shop.FixPrice), 190},
 
-                    {116, Convert.ToInt32(Shop.Alley), 601},
-                    {116, Convert.ToInt32(Shop.Lenta), 1005},
-                    {116, Convert.ToInt32(Shop.FixPrice), 1004},
+                    {116, Convert.ToInt32(Shop.Alley), 150},
+                    {116, Convert.ToInt32(Shop.Lenta), 145},
+                    {116, Convert.ToInt32(Shop.FixPrice), 150},
 
                     {117, Convert.ToInt32(Shop.Alley), 377},
                     {117, Convert.ToInt32(Shop.Lenta), 337},
