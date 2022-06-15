@@ -15,9 +15,9 @@ export class CartProduct {
         this.weight = weight;
     }
 }
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('sw.js')
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+}
 const openRequest = window.indexedDB.open('marketplace', 1);
 const verificationToken = $('input:hidden[name="__RequestVerificationToken"]').val();
 let db;

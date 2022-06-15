@@ -17,9 +17,9 @@ export class CartProduct {
     }
 }
 
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('sw.js')
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+}
 
 const openRequest = window.indexedDB.open('marketplace', 1)
 const verificationToken = $('input:hidden[name="__RequestVerificationToken"]').val() as string
@@ -54,7 +54,8 @@ export function ajaxGet() {
             RequestVerificationToken: verificationToken
         },
         success: (resp: object[]) => resp,
-        error: (xhr) => console.log(`Failed to read from server: ${xhr.responseText}`) })
+        error: (xhr) => console.log(`Failed to read from server: ${xhr.responseText}`)
+    })
 }
 
 export function ajaxDelete(action: string, pk: (number | string)[]) {
@@ -73,7 +74,7 @@ $('.add-to-cart').on('click', async function () {
             new Notification('ШОК ЦЕНА', {body: `При покупке 10 штук этого же скидка 20%.`})
         }
     })
-    
+
     const widget = $(this).parents('.Item')
     const shopName = widget.find('.dd-selected-value').val() as string
 
