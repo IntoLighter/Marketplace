@@ -17,6 +17,10 @@ export class CartProduct {
     }
 }
 
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('sw.js')
+// }
+
 const openRequest = window.indexedDB.open('marketplace', 1)
 const verificationToken = $('input:hidden[name="__RequestVerificationToken"]').val() as string
 let db: IDBDatabase
@@ -64,6 +68,12 @@ export function ajaxDelete(action: string, pk: (number | string)[]) {
 }
 
 $('.add-to-cart').on('click', async function () {
+    Notification.requestPermission().then(result => {
+        if (result === 'granted') {
+            new Notification('ШОК ЦЕНА', {body: `При покупке 10 штук этого же скидка 20%.`})
+        }
+    })
+    
     const widget = $(this).parents('.Item')
     const shopName = widget.find('.dd-selected-value').val() as string
 

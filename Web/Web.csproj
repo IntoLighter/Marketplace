@@ -36,6 +36,7 @@
     <ItemGroup>
         <TypeScriptCompile Include="wwwroot\js\cart.ts" />
         <TypeScriptCompile Include="wwwroot\js\site.ts" />
+        <TypeScriptCompile Include="wwwroot\js\sw.ts" />
     </ItemGroup>
 
     <ItemGroup>

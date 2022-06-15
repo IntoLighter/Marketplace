@@ -15,6 +15,9 @@ export class CartProduct {
         this.weight = weight;
     }
 }
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('sw.js')
+// }
 const openRequest = window.indexedDB.open('marketplace', 1);
 const verificationToken = $('input:hidden[name="__RequestVerificationToken"]').val();
 let db;
@@ -57,6 +60,11 @@ export function ajaxDelete(action, pk) {
     });
 }
 $('.add-to-cart').on('click', async function () {
+    Notification.requestPermission().then(result => {
+        if (result === 'granted') {
+            new Notification('ШОК ЦЕНА', { body: `При покупке 10 штук этого же скидка 20%.` });
+        }
+    });
     const widget = $(this).parents('.Item');
     const shopName = widget.find('.dd-selected-value').val();
     const countWidget = $(this).parent().find('.Count');

@@ -42,7 +42,7 @@
   border-radius: 0.4rem;
 }
 .Item {
-  margin-bottom: 2rem;
+  margin-bottom: 8rem;
 }
 .Item .Item-data > * {
   padding-left: 0;
@@ -90,5 +90,8 @@
 }
 body {
   font-size: 0.9rem;
+}
+.btn-link {
+  text-decoration: none;
 }
 /*# sourceMappingURL=site.css.map */
