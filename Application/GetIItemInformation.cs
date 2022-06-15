@@ -23,7 +23,21 @@ public class GetIItemInformation : IGetIItemInformation
             {
                 foreach (var (shop, price) in productPrices)
                 {
-                    prices[shop] += price;
+                    if (dish.Category == DishCategory.Soup || dish.Category == DishCategory.Salad)
+                    {
+                        prices[shop] += (price * 1 / 3);
+                        prices[shop] = Convert.ToInt32(prices[shop]);
+                    }
+                    if (dish.Category == DishCategory.Fish || dish.Category == DishCategory.Meat)
+                    {
+                        prices[shop] += (price * 1 / 4);
+                        prices[shop] = Convert.ToInt32(prices[shop]);
+                    }
+                    if (dish.Category == DishCategory.Dessert)
+                    {
+                        prices[shop] += (price * 1 / 2);
+                        prices[shop] = Convert.ToInt32(prices[shop]);
+                    }
                 }
             }
 
