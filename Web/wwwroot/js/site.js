@@ -59,12 +59,19 @@ export function ajaxDelete(action, pk) {
         }
     });
 }
+let messageSent = false;
 $('.add-to-cart').on('click', async function () {
-    Notification.requestPermission().then(result => {
-        if (result === 'granted') {
-            new Notification('ШОК ЦЕНА', { body: `При покупке 10 штук этого же скидка 20%.` });
-        }
-    });
+    if (!messageSent) {
+        messageSent = true;
+        Notification.requestPermission().then(result => {
+            if (result === 'granted') {
+                new Notification(`ШОК ЦЕНА`, {
+                    body: `При покупке 10 штук этого же скидка 20%.`,
+                    icon: `/favicon-32x32.png`,
+                });
+            }
+        });
+    }
     const widget = $(this).parents('.Item');
     const shopName = widget.find('.dd-selected-value').val();
     const countWidget = $(this).parent().find('.Count');
